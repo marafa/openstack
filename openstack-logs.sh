@@ -7,7 +7,6 @@ then
 	echo  ERROR: multitail not found!
 	yum install multitail
 else
-#	multitail /var/log/libvirt/libvirtd.log /var/log/nova/*log /var/log/messages
 	echo `basename $0` $version
 fi
 
