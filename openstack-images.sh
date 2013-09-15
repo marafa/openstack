@@ -64,7 +64,7 @@ cd $dir
 
 if [ -f $dir/glance-images.md5sum ]
 then
-	wget http://github.com/marafa/glance-images.tmp
+	wget https://raw.github.com/marafa/openstack/master/glance-images.md5sum
 fi
 
 case $1 in
