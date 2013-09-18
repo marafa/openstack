@@ -2,15 +2,22 @@
 #downloads images, checks md5sum, adds the image to glance
 
 dir=/root/images.tmp
+md5file="`dirname $0`/glance-images.md5sum"
 
 if [ $# -eq 0 ]
 then
-	echo " Usage: `basename $0` all centos cirros fedora"
-	exit 1
+	help
 fi
 
+help(){
+	echo " Usage: `basename $0` all centos cirros fedora"
+	echo
+	echo " Submit image locations at https://github.com/marafa/openstack"
+	exit 1
+}
+
+
 cirros(){
-	echo cirros
 	image=cirros-0.3.0-x86_64-disk.img
 	location=https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img
 	name="CirrOS 0.3.0"
@@ -18,7 +25,6 @@ cirros(){
 }
 
 fedora(){
-	echo fedora
 	location=http://download.fedoraproject.org/pub/fedora/linux/releases/19/Images/x86_64/Fedora-x86_64-19-20130627-sda.qcow2
 	image=Fedora-x86_64-19-20130627-sda.qcow2
 	name="Fedora 19 x86_64"
@@ -26,7 +32,6 @@ fedora(){
 }
 
 centos(){
-	echo centos
 	location=http://mirror.catn.com/pub/catn/images/qcow2/centos6.4-x86_64-gold-master.img
 	image=centos6.4-x86_64-gold-master.img 
 	name="CentOS 6.4 x86_64"
@@ -34,16 +39,32 @@ centos(){
 }
 
 images(){
-echo $image from $location with $name
+echo debug ------
+echo image=$image 
+echo location=$location 
+echo name=$name 
+echo md5sum=$md5file
+echo debug ------
 
-wget $location
-md5sum -c glance-images.md5sum  > file.tmp
+if ! [ -f $md5file ]
+then
+	echo " ERROR: $md5file not found"
+	exit 2
+fi
+
+if ! [ -f $dir/$image ]
+then 
+	wget $location
+fi
+
+echo " INFO: Checking md5sum of $image"
+md5sum -c $md5file  > file.tmp
 grep $image file.tmp | grep OK > /dev/null
 rm -rf file.tmp
 if [ $? -eq 0 ]
 then
 	. /root/keystonerc_admin
-	glance image-create --name '$name' --disk-format qcow2 --container-format bare --is-public true < $dir/$image
+	glance image-create --name "$name" --disk-format qcow2 --container-format bare --is-public true < $dir/$image
 else
 	echo " ERROR: Image md5um indicates $image is corrupt"
 fi
@@ -80,7 +101,7 @@ case $1 in
 	all)
 		all
 	;;
+	*)
+		help
+	;;
 esac
-
-#cleanup
-cd -
