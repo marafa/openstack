@@ -39,12 +39,12 @@ centos(){
 }
 
 images(){
-echo debug ------
-echo image=$image 
-echo location=$location 
-echo name=$name 
-echo md5sum=$md5file
-echo debug ------
+#echo debug ------
+#echo image=$image 
+#echo location=$location 
+#echo name=$name 
+#echo md5sum=$md5file
+#echo debug ------
 
 if ! [ -f $md5file ]
 then
