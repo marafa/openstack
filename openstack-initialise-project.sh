@@ -29,7 +29,7 @@ echo " INFO: admin user (c$id) for $project$id has password $password"
 echo " To do: should be emailed instead"
 }
 
-assign_admin_to_user(){
+assign_role_to_user(){
 keystone user-role-add --user c$id --role admin$id --tenant $project$id
 }
 
@@ -41,4 +41,4 @@ keystone role-create --name admin$id
 create_project
 create_admin_role
 create_admin_user
-assign_admin_to_user
+assign_role_to_user
