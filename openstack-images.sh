@@ -4,18 +4,12 @@
 dir=/root/images.tmp
 md5file="`dirname $0`/glance-images.md5sum"
 
-if [ $# -eq 0 ]
-then
-	help
-fi
-
-help(){
-	echo " Usage: `basename $0` all centos cirros fedora"
+usage(){
+	echo " Usage: `basename $0` all centos cirros fedora19"
 	echo
 	echo " Submit image locations at https://github.com/marafa/openstack"
 	exit 1
 }
-
 
 cirros(){
 	image=cirros-0.3.0-x86_64-disk.img
@@ -24,7 +18,7 @@ cirros(){
 	images
 }
 
-fedora(){
+fedora19(){
 	location=http://download.fedoraproject.org/pub/fedora/linux/releases/19/Images/x86_64/Fedora-x86_64-19-20130627-sda.qcow2
 	image=Fedora-x86_64-19-20130627-sda.qcow2
 	name="Fedora 19 x86_64"
@@ -72,9 +66,16 @@ fi
 
 all(){
 	cirros
-	fedora
+	fedora19
 	centos
 }
+
+####main
+
+if [ $# -eq 0 ]
+then
+	usage
+fi
 
 if ! [ -d $dir ]
 then
@@ -102,6 +103,6 @@ case $1 in
 		all
 	;;
 	*)
-		help
+		usage
 	;;
 esac
