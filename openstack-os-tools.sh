@@ -17,7 +17,7 @@ fi
 }
 
 install_tools(){
-yum install htop iotop byobu screen alpine vnstat
+yum install htop iotop byobu screen alpine vnstat vim-enhanced
 }
 
 install_tools
