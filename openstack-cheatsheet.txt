@@ -1,0 +1,7 @@
+services
+nova		- compute
+neutron		- network
+glance		- image
+ceilometer	- metering
+cinder		- volume
+keystone	- identity
