@@ -9,28 +9,31 @@ fi
 #variables
 	
 id=$1
-tenant=Tenant #Client
-project=Customer
+tenant=Tenant 
+project=Project
+user=user
 
 ###begin
-create_project(){
-keystone tenant-create --name=$project$id --description $tenant$id
-}
-
-create_admin_user(){
+pre_requisites(){
 if ! [ -f /usr/bin/pwmake ]
 then 
 	echo " WARN: /usr/bin/pwmake not found. Pls install libpwquality"
 	exit 1
 fi
 password=`pwmake 4`
+}
+
+create_project(){
+keystone tenant-create --name=$project$id --description $tenant$id
+}
+
+create_admin_user(){
 keystone user-create --name=c$id --pass=$password --email=admin@localhost --tenant $project$id
 echo " INFO: admin user (c$id) for $project$id has password $password"
-echo " ToDo: should be emailed instead"
 }
 
 assign_role_to_user(){
-keystone user-role-add --user c$id --role admin$id --tenant $project$id
+keystone user-role-add --user $user$id --role admin$id --tenant $project$id
 }
 
 create_admin_role(){
@@ -42,12 +45,10 @@ create_networks(){
 neutron router-create router$id
 neutron net-create int_lan_$id
 CIDR=`neutron subnet-list | awk '{print $6}'| grep ^10. | cut -d/ -f1`
-	echo DEBUG CIDR=$CIDR
 if [ "$CIDR" == "" ]
 then
 	echo "WARN: CIDR 10.x.x.x not found. Is this a new install?"
 	CIDR=10.0.0.0
-	echo DEBUG CIDR=$CIDR
 fi
 CIDR2=`echo $CIDR| cut -d. -f2`
 CIDR3=`echo $CIDR| cut -d. -f3`
@@ -55,7 +56,7 @@ if [ $CIDR3 -eq 255 ]
 then
 	if [ $CIDR2 -eq	255 ]
 	then
-		echo " INFO: NICE! you are out of networks!"
+		echo " FAIL: You are out of networks!"
 		exit 3
 	else
 		CIDR2=`expr $CIDR2 + 1`
@@ -65,12 +66,13 @@ else
 fi
 
 CIDR=10.$CIDR2.$CIDR3.0
-echo CIDR=$CIDR
 
 neutron subnet-create int_lan_$id $CIDR/24 --name subnet$id
 neutron router-interface-add router$id subnet$id
 
 neutron router-gateway-set router$id PublicLAN
+ns=`ip netns list | tail -1`
+echo " INFO: Namespace for $project$id is $ns"
 }
 
 commented(){
@@ -88,15 +90,8 @@ neutron subnet-create PublicLAN 192.168.0.128/25 --name PublicLAN --enable_dhcp=
 neutron router-gateway-set router1 PublicLAN
 }
 
-tear_down(){
-#neutron floatingip-delete <floatingip-id> 
-
-neutron router-gateway-clear router$id
-neutron router-interface-delete router$id subnet$id
-neutron router-delete router$id
-}
-
 ###main
+pre_requisites
 create_project
 create_admin_role
 create_admin_user

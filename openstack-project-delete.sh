@@ -12,16 +12,19 @@ fi
 #variables
 
 id=$1
-tenant=Tenant #Client
-project=Customer
+tenant=Tenant
+project=Project
+user=user
 
 
 network_router(){
 #neutron floatingip-delete <floatingip-id>
-
+ns=`neutron router-list| grep $id | awk '{print $2}'`
+ns=qrouter-$ns
 neutron router-gateway-clear router$id
 neutron router-interface-delete router$id subnet$id
 neutron router-delete router$id
+ip netns delete $ns
 }
 
 network_net(){
@@ -33,7 +36,7 @@ neutron subnet-delete subnet$id
 }
 
 user(){
-keystone user-delete c$id 
+keystone user-delete $user$id 
 }
 
 tenant(){
