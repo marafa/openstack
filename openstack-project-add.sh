@@ -71,8 +71,6 @@ neutron subnet-create int_lan_$id $CIDR/24 --name subnet$id
 neutron router-interface-add router$id subnet$id
 
 neutron router-gateway-set router$id PublicLAN
-ns=`ip netns list | tail -1`
-echo " INFO: Namespace for $project$id is $ns"
 }
 
 commented(){
