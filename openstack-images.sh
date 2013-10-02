@@ -57,21 +57,6 @@ then
 fi
 }
 
-old(){
-if ! [ -a $md5file ]
-then
-        echo " ERROR: $md5file not found"
-        exit 2
-else
-        echo " INFO: $md5file found!"
-fi
-
-if ! [ -f $dir/$image ]
-then
-        wget $location
-fi
-}
-
 images(){
 debug
 get_md5sum
