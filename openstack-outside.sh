@@ -60,7 +60,7 @@ EOF
 }
 
 ###MAIN
-device_exist
-device_primary
-device_bridge
+#device_exist
+#device_primary
+#device_bridge
 public
