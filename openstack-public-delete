@@ -1,0 +1,5 @@
+#!/bin/sh
+neutron router-gateway-clear PublicRouter
+neutron router-interface-delete PublicRouter PublicLAN
+neutron router-delete PublicRouter
+neutron net-delete PublicLAN
