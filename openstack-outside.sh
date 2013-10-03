@@ -16,7 +16,7 @@ IP=$vlan.31
 public(){
 neutron router-create PublicRouter
 neutron net-create PublicLAN --router:external=True
-neutron subnet-create PublicLAN $vlan.0/24 --name PublicLAN --enable_dhcp=False --allocation-pool start=$start,end=$start --gateway=$gw --dns_nameservers list=true $dns1 $dns2
+neutron subnet-create PublicLAN $vlan.0/24 --name PublicLAN --enable_dhcp=False --allocation-pool start=$start,end=$end --gateway=$gw --dns_nameservers list=true $dns1 $dns2
 neutron router-gateway-set PublicRouter PublicLAN
 }
 
