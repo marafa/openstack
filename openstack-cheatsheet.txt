@@ -1,7 +1,16 @@
 services
+__________________________
 nova		- compute
 neutron		- network
 glance		- image
 ceilometer	- metering
 cinder		- volume
 keystone	- identity
+
+ips
+_________________________
+fixed ips	- ips assigned to a vm to get it on to a network
+floating ips	- additional ips assigned to a vm dynamically to allow the
+outside world (network) to reach the vm
+
+
