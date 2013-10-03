@@ -28,7 +28,7 @@ keystone tenant-create --name=$project$id --description $tenant$id
 }
 
 create_admin_user(){
-keystone user-create --name=c$id --pass=$password --email=admin@localhost --tenant $project$id
+keystone user-create --name=$user$id --pass=$password --email=admin@localhost --tenant $project$id
 echo " INFO: admin user (c$id) for $project$id has password $password"
 }
 
