@@ -32,7 +32,6 @@ fi
 }
 
 device_primary(){
-mv /etc/sysconfig/network-scripts/ifcfg-$device /root/ifcfg-$device
 cat >> /etc/sysconfig/network-scripts/ifcfg-$device << EOF
 DEVICE=$device
 HWADDR=$hwaddr
@@ -59,8 +58,18 @@ ONBOOT=yes
 EOF
 }
 
+backup(){
+mv /etc/sysconfig/network-scripts/ifcfg-$device /root/ifcfg-$device
+}
+
+ovs(){ #open vswitch
+ovs-vsctl add-port br-ex $device; service network restart
+}
+
 ###MAIN
 device_exist
+backup
 device_primary
 device_bridge
+ovs
 public
