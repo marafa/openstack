@@ -10,8 +10,9 @@ gw=$vlan.1
 dns1=4.2.2.2
 dns2=
 hwaddr=`cat /etc/udev/rules.d/70-persistent-net.rules | grep $device | cut -d, -f4 | sed 's/ ATTR{address}=="//g' | sed 's/"//g'`
-IP=$vlan.31
+IP=`ifconfig $device|grep -w inet|awk '{print $2}'|cut -d: -f2`
 
+echo debug $IP
 
 public(){
 neutron router-create PublicRouter
@@ -66,10 +67,11 @@ ovs(){ #open vswitch
 ovs-vsctl add-port br-ex $device; service network restart
 }
 
-###MAIN
+a(){ ###MAIN
 device_exist
 backup
 device_primary
 device_bridge
 ovs
 public
+}
