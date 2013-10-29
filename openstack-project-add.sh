@@ -29,7 +29,7 @@ keystone tenant-create --name=$project$id --description $tenant$id
 
 create_admin_user(){
 keystone user-create --name=$user$id --pass=$password --email=admin@localhost --tenant $project$id
-echo " INFO: admin user (c$id) for $project$id has password $password"
+echo " INFO: admin user ($user$id) for $project$id has password $password"
 }
 
 assign_role_to_user(){
@@ -88,11 +88,22 @@ neutron subnet-create PublicLAN 192.168.0.128/25 --name PublicLAN --enable_dhcp=
 neutron router-gateway-set router1 PublicLAN
 }
 
+keystonerc(){
+mkdir -p /root/keystonerc
+echo >> /root/keystonerc/keystonerc_$user$id << EOF
+export OS_USERNAME=$user$id
+export OS_TENANT_NAME=$tenant
+export OS_PASSWORD=$password
+export OS_AUTH_URL=http://192.168.0.33:35357/v2.0/
+export PS1='[\u@\h \W(keystone_$user$id)]\$ '
+EOF
+}
+
 ###main
 pre_requisites
 create_project
 create_admin_role
 create_admin_user
 assign_role_to_user
-
+keystonerc
 create_networks
