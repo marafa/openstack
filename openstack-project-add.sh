@@ -6,6 +6,8 @@ then
 	exit 2
 fi
 
+source /root/keystonerc_admin
+
 #variables
 	
 id=$1
@@ -21,7 +23,9 @@ then
 	echo " WARN: /usr/bin/pwmake not found. Pls install libpwquality"
 	exit 1
 fi
+####making things simpler while i write this
 password=`pwmake 4`
+password=password
 }
 
 create_project(){
@@ -33,7 +37,7 @@ create_admin_user(){
 keystone user-create --name=$user$id --pass=$password --email=admin@localhost 
 
 echo " INFO: admin user ($user$id) for $project$id has password $password"
-echo "------- check if password $password has a ";" semi-colon as that breaks the rc file"
+echo "------- check if password $password has special characters that might break things eg. ; *"
 }
 
 assign_role_to_user(){
@@ -41,16 +45,11 @@ assign_role_to_user(){
 keystone user-role-add --user $user$id --role Member --tenant $project$id
 }
 
-create_admin_role(){
-keystone role-create --name admin$id
-}
-
 create_networks(){
-
 source $ks_dir/keystonerc_$user$id
 
 neutron router-create router$id
-neutron net-create $project\_lan_$id
+neutron net-create PrivateNet_$id
 CIDR=`neutron subnet-list | awk '{print $6}'| grep ^10. | cut -d/ -f1`
 if [ "$CIDR" == "" ]
 then
@@ -74,32 +73,19 @@ fi
 
 CIDR=10.$CIDR2.$CIDR3.0
 
-neutron subnet-create int_lan_$id $CIDR/24 --name subnet$id
-neutron router-interface-add router$id subnet$id
+neutron subnet-create --name PrivateSubnet_$id PrivateNet_$id $CIDR/24
+neutron router-interface-add router$id PrivateSubnet_$id
 
-#neutron router-gateway-set router$id PublicLAN #should this be done by the admin token?
-}
-
-commented(){
-###attaching a public subnet ###supposedly previously created
-neutron net-show PublicLAN > /dev/null
-if [ $? -eq 1 ]
-then
-	echo "WARN: PublicLAN not found"
-	exit 4
-fi
-neutron net-create PublicLAN --router:external=True
-#neutron subnet-create PublicLAN --allocation-pool start=192.168.0.129,end=192.168.0.140 --disable-dhcp --dns-nameserver 8.8.8.8 --gateway 192.168.0.1 --name PublicLAN 192.168.0.0/24
-#neutron subnet-create PublicLAN --allocation-pool start=192.168.0.130,end=192.168.0.190 --gateway 192.168.0.1 192.168.0.0/24 -- --enable_dhcp=False
-neutron subnet-create PublicLAN 192.168.0.128/25 --name PublicLAN --enable_dhcp=False --allocation-pool start=192.168.0.129,end=192.168.0.140 --gateway=192.168.0.1
-neutron router-gateway-set router1 PublicLAN
+source /root/keystonerc_admin
+neutron router-gateway-set router$id PublicLAN 
 }
 
 keystonerc(){
+echo " INFO: Writing $ks_dir/keystonerc_$user$id"
 mkdir -p $ks_dir
 cat >> $ks_dir/keystonerc_$user$id << EOF
 export OS_USERNAME=$user$id
-export OS_TENANT_NAME=$tenant$id
+export OS_TENANT_NAME=$project$id
 export OS_PASSWORD=$password
 export OS_AUTH_URL=http://192.168.0.33:35357/v2.0/
 export PS1='[\u@\h \W(keystone_$user$id)]\$ '
@@ -108,9 +94,8 @@ EOF
 
 ###main
 mk_pw
-#create_admin_role
 create_admin_user
 create_project
 assign_role_to_user
 keystonerc
-#create_networks
+create_networks
