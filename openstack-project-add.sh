@@ -15,7 +15,7 @@ user=user
 ks_dir=/root/keystonerc
 
 ###begin
-pre_requisites(){
+mk_pw(){
 if ! [ -f /usr/bin/pwmake ]
 then 
 	echo " WARN: /usr/bin/pwmake not found. Pls install libpwquality"
@@ -103,7 +103,7 @@ EOF
 }
 
 ###main
-pre_requisites
+mk_pw
 create_project
 create_admin_role
 create_admin_user
