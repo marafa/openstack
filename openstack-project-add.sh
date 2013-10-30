@@ -95,7 +95,7 @@ keystonerc(){
 mkdir -p $ks_dir
 cat >> $ks_dir/keystonerc_$user$id << EOF
 export OS_USERNAME=$user$id
-export OS_TENANT_NAME=$tenant
+export OS_TENANT_NAME=$tenant$id
 export OS_PASSWORD=$password
 export OS_AUTH_URL=http://192.168.0.33:35357/v2.0/
 export PS1='[\u@\h \W(keystone_$user$id)]\$ '
@@ -109,4 +109,4 @@ create_admin_role
 create_admin_user
 assign_role_to_user
 keystonerc
-create_networks
+#create_networks
