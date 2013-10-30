@@ -15,7 +15,7 @@ id=$1
 tenant=Tenant
 project=Project
 user=user
-
+ks_dir=/root/keystonerc
 
 network_router(){
 #neutron floatingip-delete <floatingip-id>
@@ -47,6 +47,10 @@ role(){
 keystone role-delete admin$id
 }
 
+keystonerc(){
+echo " INFO: Deleting $ks_dir/keystonerc_$user$id"
+rm -rf $ks_dir/keystonerc_$user$id
+}
 
 network_router
 network_net
@@ -54,3 +58,4 @@ network_subnet
 user
 role
 tenant
+keystonerc
