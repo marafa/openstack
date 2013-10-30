@@ -30,6 +30,11 @@ then
 	echo " ERROR: $device not found"
 	exit 1
 fi
+if [ -f /etc/sysconfig/network-scripts/ifcfg-br-ex ]
+then
+	echo " ERROR: br-ex already configured! Rerunning?"
+	exit 1
+fi
 }
 
 device_primary(){
@@ -67,11 +72,10 @@ ovs(){ #open vswitch
 ovs-vsctl add-port br-ex $device; service network restart
 }
 
-a(){ ###MAIN
+ ###MAIN
 device_exist
 backup
 device_primary
 device_bridge
 ovs
 public
-}
