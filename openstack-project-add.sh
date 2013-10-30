@@ -29,12 +29,16 @@ keystone tenant-create --name=$project$id --description $tenant$id
 }
 
 create_admin_user(){
-keystone user-create --name=$user$id --pass=$password --email=admin@localhost --tenant $project$id
+#keystone user-create --name=$user$id --pass=$password --email=admin@localhost --tenant $project$id
+keystone user-create --name=$user$id --pass=$password --email=admin@localhost 
+
 echo " INFO: admin user ($user$id) for $project$id has password $password"
+echo "------- check if password $password has a ";" semi-colon as that breaks the rc file"
 }
 
 assign_role_to_user(){
-keystone user-role-add --user $user$id --role admin$id --tenant $project$id
+#keystone user-role-add --user $user$id --role admin$id --tenant $project$id
+keystone user-role-add --user $user$id --role Member --tenant $project$id
 }
 
 create_admin_role(){
@@ -104,9 +108,9 @@ EOF
 
 ###main
 mk_pw
-create_project
-create_admin_role
+#create_admin_role
 create_admin_user
+create_project
 assign_role_to_user
 keystonerc
 #create_networks
