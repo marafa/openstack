@@ -92,6 +92,14 @@ export PS1='[\u@\h \W(keystone_$user$id)]\$ '
 EOF
 }
 
+write_security_rules(){
+echo use neutron secgroup to add ssh and ping rules
+source $ks_dir/keystonerc_$user$id
+nova keypair-add key$id > $ks_dir/key$id.pem
+nova secgroup-create SecGrp$id "Security Group $id"
+nova secgroup-add-rule SecGrp$id tcp 22 22 0.0.0.0/0
+}
+
 ###main
 mk_pw
 create_admin_user
@@ -99,3 +107,4 @@ create_project
 assign_role_to_user
 keystonerc
 create_networks
+write_security_rules

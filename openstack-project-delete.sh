@@ -22,17 +22,17 @@ network_router(){
 ns=`neutron router-list| grep $id | awk '{print $2}'`
 ns=qrouter-$ns
 neutron router-gateway-clear router$id
-neutron router-interface-delete router$id subnet$id
+neutron router-interface-delete router$id PrivateSubnet_$id
 neutron router-delete router$id
 ip netns delete $ns
 }
 
 network_net(){
-neutron net-delete int_lan_$id
+neutron net-delete PrivateNet_$id
 }
 
 network_subnet(){
-neutron subnet-delete subnet$id
+neutron subnet-delete PrivateSubnet_$id
 }
 
 user(){
@@ -47,6 +47,10 @@ role(){
 keystone role-delete admin$id
 }
 
+secgroup(){
+nova secgroup-delete SecGrp$id
+}
+
 keystonerc(){
 echo " INFO: Deleting $ks_dir/keystonerc_$user$id"
 rm -rf $ks_dir/keystonerc_$user$id
@@ -55,6 +59,7 @@ rm -rf $ks_dir/keystonerc_$user$id
 network_router
 network_net
 network_subnet
+secgroup
 user
 role
 tenant
