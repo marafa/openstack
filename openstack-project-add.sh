@@ -12,6 +12,7 @@ id=$1
 tenant=Tenant 
 project=Project
 user=user
+ks_dir=/root/keystonerc
 
 ###begin
 pre_requisites(){
@@ -42,8 +43,10 @@ keystone role-create --name admin$id
 
 create_networks(){
 
+source $ks_dir/keystonerc_$user$id
+
 neutron router-create router$id
-neutron net-create int_lan_$id
+neutron net-create $project\_lan_$id
 CIDR=`neutron subnet-list | awk '{print $6}'| grep ^10. | cut -d/ -f1`
 if [ "$CIDR" == "" ]
 then
@@ -70,7 +73,7 @@ CIDR=10.$CIDR2.$CIDR3.0
 neutron subnet-create int_lan_$id $CIDR/24 --name subnet$id
 neutron router-interface-add router$id subnet$id
 
-neutron router-gateway-set router$id PublicLAN
+#neutron router-gateway-set router$id PublicLAN #should this be done by the admin token?
 }
 
 commented(){
@@ -89,8 +92,8 @@ neutron router-gateway-set router1 PublicLAN
 }
 
 keystonerc(){
-mkdir -p /root/keystonerc
-echo >> /root/keystonerc/keystonerc_$user$id << EOF
+mkdir -p $ks_dir
+cat >> $ks_dir/keystonerc_$user$id << EOF
 export OS_USERNAME=$user$id
 export OS_TENANT_NAME=$tenant
 export OS_PASSWORD=$password
