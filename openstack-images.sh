@@ -1,6 +1,8 @@
 #!/bin/sh
 #downloads images, checks md5sum, adds the image to glance
 
+echo "Todo: integrate http://dev.centos.org/centos/hvm/"
+
 dir=/root/images.tmp
 md5file="`dirname $0`/glance-images.md5sum"
 
