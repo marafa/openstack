@@ -10,3 +10,5 @@ scripts for openstack admin tools
 - openstack-outside.sh - setup br-ex to communicate with the outside world
 
 - openstack-cheatsheet.txt - a cheat sheet
+
+- cpu_id.sh - identifies and offer fixes for cpu virtualisation
