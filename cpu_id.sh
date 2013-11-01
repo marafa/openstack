@@ -19,8 +19,6 @@ else
 			echo " WARN: Your cpu does not support nested kvm"
 		else
 			echo " INFO: Your cpu supports nested kvm"
-			if [ $UID -eq 0 ] 
-			then 
 				enabled=`cat /sys/module/kvm_intel/parameters/nested `
 				if [ "$enabled" == "Y" ]
 				then
@@ -28,15 +26,17 @@ else
 					exit 0
 				else
 					echo " INFO: Nested KVM is not enabled. Enabling"
-					if ! [ -f /etc/modprobe.d/nested_kvm.conf ]
-					then
-						echo "options kvm-intel nested=y" > /etc/modprobe.d/nested_kvm.conf
+					if [ $UID -eq 0 ] 
+					then 
+						if ! [ -f /etc/modprobe.d/nested_kvm.conf ]
+						then
+							echo "options kvm-intel nested=y" > /etc/modprobe.d/nested_kvm.conf
+						fi
+						echo " INFO: Please reboot to enable nested kvm"
+					else
+						echo " WARN: You need to be root to enable nested kvm"
 					fi
-					echo " INFO: Please reboot to enable nested kvm"
 				fi
-			else
-				echo " WARN: You need to be root to enable nested kvm"
-			fi
 		fi
 	fi
 fi
