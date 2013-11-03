@@ -88,7 +88,7 @@ export OS_USERNAME=$user$id
 export OS_TENANT_NAME=$project$id
 export OS_PASSWORD=$password
 export OS_AUTH_URL=http://192.168.0.33:35357/v2.0/
-export PS1='[\u@\h \W(keystone_$user$id)]\$ '
+export PS1='[\u@\h \W(\033[1;32mkeystone_$user$id\033[0m)]\$ '
 EOF
 }
 
