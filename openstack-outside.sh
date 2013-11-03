@@ -75,11 +75,12 @@ ovs-vsctl add-port br-ex $device; service network restart
 }
 
 check(){
-if [ -f /etc/sysconfig/network-scripts/ifcfg-br-ex]
+if [ -f /etc/sysconfig/network-scripts/ifcfg-br-ex ]
 then
 	echo " WARN: /etc/sysconfig/network-scripts/ifcfg-br-ex exist. Was `basename $0` previously run?"
 	exit 1
 fi
+}
 
 ###MAIN
 check
