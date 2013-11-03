@@ -13,4 +13,13 @@ fixed ips	- ips assigned to a vm to get it on to a network
 floating ips	- additional ips assigned to a vm dynamically to allow the
 outside world (network) to reach the vm
 
+br interfaces
+_________________________
+br-ex 		- aka external bridge - bridges the external network and the 
+br-int		- aka integration bridge - think of it as a patch panel
 
+networking tools
+_________________________
+ip (netns etc)
+neutron
+ovs (ovs-vsctl etc) - used when openvswitch (aka ovs) is used
