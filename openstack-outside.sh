@@ -3,7 +3,7 @@
 source /root/keystonerc_admin
 
 device=eth0
-vlan=192.168.0
+vlan=192.168.122
 start=$vlan.150
 end=$vlan.200
 gw=$vlan.1
@@ -14,7 +14,7 @@ hwaddr=`cat /etc/udev/rules.d/70-persistent-net.rules | grep $device | cut -d, -
 IP=`ifconfig $device|grep -w inet|awk '{print $2}'|cut -d: -f2`
 domain=marafa.vm
 
-public(){
+public_network(){
 neutron router-create PublicRouter
 neutron net-create --tenant-id services PublicLAN --router:external=True
 neutron subnet-create --tenant-id services --allocation-pool start=$start,end=$end --gateway=$gw --disable-dhcp --name PublicSubnet PublicLAN $vlan.0/24
@@ -89,4 +89,4 @@ backup
 device_primary
 device_bridge
 ovs
-public
+#public_network
