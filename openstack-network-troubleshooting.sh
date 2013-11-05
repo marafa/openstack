@@ -3,7 +3,10 @@
 #this is a script that collects information to aid in troubleshooting efforts
 
 source /root/keystonerc_admin
-alias quantum=neutron
+if [ -f /usr/bin/quantum ]
+then
+	alias neutron=quantum
+fi
 
 echo "---Packages Installed---"
 rpm -qa | grep -iE "neutron|nova-network|openstack*" | sort
