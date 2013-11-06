@@ -3,6 +3,13 @@
 #this is a script that collects information to aid in troubleshooting efforts
 
 source /root/keystonerc_admin
+
+echo ---Redhat Release---
+cat /etc/redhat-release
+
+echo ---Repositories---
+yum repolist
+
 if [ -f /usr/bin/quantum ]
 then
 	alias neutron=quantum
