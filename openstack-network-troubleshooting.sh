@@ -19,10 +19,10 @@ echo "---Packages Installed---"
 rpm -qa | grep -iE "neutron|nova-network|openstack*" | sort
 echo 
 
-for i in `ls /etc/sysconfig/network-scripts/ifcfg-*`
+for device in `ls /etc/sysconfig/network-scripts/ifcfg-*`
 do
-	echo "---Device config for $i---"
-	cat $i
+	echo "---Device config for $device---"
+	cat $device
 	echo 
 done
 echo "---Ifconfig---"
@@ -44,13 +44,13 @@ echo
 
 echo ---Neutron devices---
 neutron router-list
-for i in `neutron router-list|grep -v "id"|awk '{print $2}'`; do neutron router-show $i; done
+for router in `neutron router-list|grep -v "id"|awk '{print $2}'`; do neutron router-show $router; done
 echo 
 neutron net-list
-for i in `neutron net-list|grep -v "id"| awk '{print $2}'`; do neutron net-show $i; done
+for net in `neutron net-list|grep -v "id"| awk '{print $2}'`; do neutron net-show $net; done
 echo 
 neutron subnet-list
-for i in `neutron subnet-list|grep -v "id"|awk '{print $2}'`; do neutron subnet-show $i; done
+for subnet in `neutron subnet-list|grep -v "id"|awk '{print $2}'`; do neutron subnet-show $subnet; done
 echo 
 
 echo ---Name resolution---
