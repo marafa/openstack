@@ -34,6 +34,10 @@ echo
 echo ---Open vSwitch---
 ovs-vsctl show
 echo 
+echo ---Flows ---
+for bridge in `ovs-dpctl show | grep '\:\s.*\(internal\)' | awk '{print $3}'`; do  echo "-- $bridge Flows --"; ovs-ofctl dump-flows $bridge; done
+echo
+
 echo ---Network Namespaces---
 ip netns
 echo 
