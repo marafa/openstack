@@ -4,7 +4,7 @@ source /root/keystonerc_admin
 
 now=`date +%Y%m%d%H%M`
 device=eth0
-vlan=192.168.0
+vlan=192.168.122
 start=$vlan.150
 end=$vlan.200
 gw=$vlan.1
