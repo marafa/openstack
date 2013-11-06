@@ -8,7 +8,8 @@ scripts for openstack admin tools
 - openstack-project-add.sh - sets up the project, role, user and network for the project
 - openstack-project-delete.sh - deletes the project, role, user and network for the project
 - openstack-outside.sh - setup br-ex to communicate with the outside world
+- openstack-network-troubleshooting.sh - script to collect information to aid network troubleshooting
 
 - openstack-cheatsheet.txt - a cheat sheet
 
-- cpu_id.sh - identifies and offer fixes for cpu virtualisation
+- nested_kvm_cpu.sh - identifies and enables nested kvm support if available
