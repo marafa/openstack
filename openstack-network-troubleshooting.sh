@@ -28,6 +28,11 @@ done
 echo "---Ifconfig---"
 ifconfig
 echo 
+
+echo "-- Devices --"
+ip addr
+echo
+
 echo "---Routes----"
 route -n
 echo 
