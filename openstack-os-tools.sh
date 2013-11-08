@@ -17,11 +17,11 @@ fi
 }
 
 install_tools(){
-echo if [ -f /etc/yum.repos.d/epel*repo ]
-echo then
-echo pkg="htop byobu alpine vnstat libpwquality multitail"
-echo fi
-echo pkg=$pkg
+if [ -f /etc/yum.repos.d/epel.repo ]
+then
+pkg="htop byobu alpine vnstat libpwquality multitail"
+fi
+pkg=$pkg
 yum install $pkg iotop screen vim-enhanced yum-presto wget vim virt-what
 }
 
