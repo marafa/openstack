@@ -6,7 +6,7 @@ source /root/keystonerc_admin
 lines=`ifconfig | awk -F "[: ]+" '/inet addr:/ { if ($4 != "127.0.0.1") print $4 }' | cut -d. -f1,2,3| wc -l`
 if [ $lines -gt 1 ]
 then
-	echo " WARN: More than 1 found"
+	echo " WARN: More than 1 interface found"
 	echo " Pls edit this file"
 	exit 1
 else
