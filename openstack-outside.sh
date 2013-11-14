@@ -7,7 +7,7 @@ lines=`ifconfig | awk -F "[: ]+" '/inet addr:/ { if ($4 != "127.0.0.1") print $4
 if [ $lines -gt 1 ]
 then
 	echo " WARN: More than 1 interface found"
-	echo " Pls edit this file"
+	echo " Pls edit this `basename $0"
 	exit 1
 else
 	vlan=`ifconfig | awk -F "[: ]+" '/inet addr:/ { if ($4 != "127.0.0.1") print $4 }' | cut -d. -f1,2,3`
