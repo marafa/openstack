@@ -18,13 +18,14 @@ ks_dir=/root/keystonerc
 
 ###begin
 mk_pw(){
-if ! [ -f /usr/bin/pwmake ]
-then 
-	echo " WARN: /usr/bin/pwmake not found. Pls install libpwquality"
-	exit 1
-fi
-####making things simpler while i write this
-password=`pwmake 4`
+#if ! [ -f /usr/bin/pwmake ]
+#then 
+#	echo " WARN: /usr/bin/pwmake not found. Pls install libpwquality"
+#	exit 1
+#fi
+#password=`pwmake 4`
+#password=`date +%s | sha256sum | base64 | head -c 8 ; echo`
+####making things simpler while i test this
 password=password
 }
 
