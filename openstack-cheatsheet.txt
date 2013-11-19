@@ -11,7 +11,7 @@ ips
 _________________________
 fixed ips	- ips assigned to a vm to get it on to a network
 floating ips	- additional ips assigned to a vm dynamically to allow the
-outside world (network) to reach the vm
+outside world (network) to reach the vm aka Real IP
 
 br interfaces
 _________________________
