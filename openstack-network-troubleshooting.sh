@@ -69,3 +69,6 @@ cat /etc/hosts
 
 echo ---OpenStack status---
 /usr/bin/openstack-status
+
+echo -- Virt-What --
+virt-what
