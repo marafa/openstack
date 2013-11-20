@@ -54,7 +54,7 @@ echo
 
 echo ---Neutron devices---
 neutron router-list
-for router in `neutron router-list|grep -v "id"|awk '{print $2}'`; do neutron router-show $router; done
+for router in `neutron router-list|grep -vw "id"|awk '{print $2}'`; do neutron router-show $router; done
 echo 
 neutron net-list
 for net in `neutron net-list|grep -v "id"| awk '{print $2}'`; do neutron net-show $net; done
