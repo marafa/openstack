@@ -70,5 +70,8 @@ cat /etc/hosts
 echo ---OpenStack status---
 /usr/bin/openstack-status
 
+if [ /usr/sbin/virt-what ]
+then
 echo -- Virt-What --
-virt-what
+	/usr/sbin/virt-what
+fi
