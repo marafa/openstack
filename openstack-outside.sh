@@ -1,5 +1,12 @@
 #!/bin/sh
 
+echo -n " WARN: `basename $0` will modify your network settings. Continue? y/n: "
+read answer
+if ! [ "$answer" == "y" ]
+then
+        exit 1
+fi
+
 source /root/keystonerc_admin
 
 interfaces(){
@@ -106,6 +113,43 @@ device_bridge
 ovs
 #public_network
 notes(){
+
+echo check if user "demo" exists
+keystone user-get demo > /dev/null 2>&1
+if [ $? -eq 0 ]
+then
+	source ~/keystonerc_demo
+	echo check if the public network exists
+	neutron net-show public > /dev/null 2>&1
+	if ! [ $? -eq 0 ]
+	then
+		echo create the public net
+	fi
+	echo check if the public subnet exists
+	neutron subnet-show public_subnet > /dev/null 2>&1
+	if ! [ $? -eq 0 ]
+	then
+		echo create the public subnet
+	fi
+else
+	echo user demo doesnt exist
+	echo create a user for networking
+	source keystonerc_networking
+	        echo check if the public network exists
+        neutron net-show public > /dev/null 2>&1
+        if ! [ $? -eq 0 ]
+        then
+                echo create the public net
+        fi
+        echo check if the public subnet exists
+        neutron subnet-show public_subnet > /dev/null 2>&1
+        if ! [ $? -eq 0 ]
+        then
+                echo create the public subnet
+        fi
+fi
+
+
 num=`neutron net-list | grep -i public | awk '{print $4}'|wc -l`
 if ! [ $num -eq 0 ]
 then
