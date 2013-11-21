@@ -48,7 +48,7 @@ fi
 
 chkconfig ntpdate on
 
-ovs-vsctl add-port br-ex eth0; service network restart
+#ovs-vsctl add-port br-ex eth0; service network restart #this line is now in openstack-outside.sh
 
 sed -i 's/debug=True/debug=false/g' /etc/nova/nova.conf
 for service in `ls /etc/init.d/openstack-nova*`
@@ -58,3 +58,5 @@ done
 
 sh /root/bin/openstack/openstack-outside.sh ### looks like we dont have to create a public network if demo account is used
 
+###create a flavour for centos
+nova flavor-create --ephemeral 0 --rxtx-factor 1.0 --is-public True m2.small 6 1024 10 1
