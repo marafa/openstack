@@ -88,10 +88,6 @@ ONBOOT=yes
 EOF
 }
 
-backup(){
-mv /etc/sysconfig/network-scripts/ifcfg-$device /root/ifcfg-$device.$now
-}
-
 ovs(){ #open vswitch
 ovs-vsctl add-port br-ex $device; service network restart
 }
@@ -99,15 +95,14 @@ ovs-vsctl add-port br-ex $device; service network restart
 check(){
 if [ -f /etc/sysconfig/network-scripts/ifcfg-br-ex ]
 then
-	echo " WARN: /etc/sysconfig/network-scripts/ifcfg-br-ex exist. Was `basename $0` previously run?"
-	exit 1
+	echo " WARN: /etc/sysconfig/network-scripts/ifcfg-br-ex exist. Saving to /root/ifcfg-$device.$now"
+	mv /etc/sysconfig/network-scripts/ifcfg-$device /root/ifcfg-$device.$now
 fi
 }
 
 ###MAIN
 check
 device_exist
-backup
 device_primary
 device_bridge
 ovs
@@ -118,9 +113,10 @@ echo check if user "demo" exists
 keystone user-get demo > /dev/null 2>&1
 if [ $? -eq 0 ]
 then
-	source ~/keystonerc_demo
+	source /root/keystonerc_demo
 else
 	echo user demo doesnt exist
+	add_networking_user
 	source /root/keystonerc_networking
 fi
 
@@ -130,7 +126,7 @@ public_router
 }
 
 add_networking_user(){
-
+echo add networking user
 }
 
 public_net(){
@@ -139,6 +135,7 @@ neutron net-show public > /dev/null 2>&1
 if ! [ $? -eq 0 ]
 then
 	echo create the public net
+	neutron net-create --tenant-id admin PublicLAN --router:external=True
 fi
 }
 
