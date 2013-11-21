@@ -14,7 +14,7 @@ lines=`ifconfig | awk -F "[: ]+" '/inet addr:/ { if ($4 != "127.0.0.1") print $4
 if [ $lines -gt 1 ]
 then
 	echo " WARN: More than 1 physical network interface found"
-	echo " Pls edit this `basename $0`"
+	echo " Pls edit the variable available to `basename $0`"
 	exit 1
 else
 	vlan=`ifconfig | awk -F "[: ]+" '/inet addr:/ { if ($4 != "127.0.0.1") print $4 }' | cut -d. -f1,2,3`
@@ -36,13 +36,6 @@ hwaddr=`cat /etc/udev/rules.d/70-persistent-net.rules | grep $device | cut -d, -
 IP=`ifconfig $device|grep -w inet|awk '{print $2}'|cut -d: -f2`
 domain=marafa.vm
 
-public_network(){
-neutron router-create PublicRouter
-neutron net-create --tenant-id services PublicLAN --router:external=True
-neutron subnet-create --tenant-id services --allocation-pool start=$start,end=$end --gateway=$gw --disable-dhcp --name PublicSubnet PublicLAN $vlan.0/24
-neutron router-gateway-set PublicRouter PublicLAN
-}
-
 ##determine one physical nic or more
 ##if one nic move ip from nic to br-ex in /etc/sysconfig/network-scripts
 device_exist(){
@@ -50,11 +43,12 @@ ifconfig $device > /dev/null  2>&1
 if ! [ $? -eq 0 ]
 then
 	echo " ERROR: $device not found"
-	exit 1
+	echo " Pls edit the variable available to `basename $0`"
+	exit 2
 fi
 if [ -f /etc/sysconfig/network-scripts/ifcfg-br-ex ]
 then
-	echo " ERROR: br-ex already configured. Removing"
+	echo " WARN: br-ex already configured. Removing"
 	mv /etc/sysconfig/network-scripts/ifcfg-br-ex /root/ifcfg-br-ex-$now
 fi
 }
@@ -107,8 +101,8 @@ device_primary
 device_bridge
 ovs
 #public_network
-tobe_the_new_public_network_proc(){
 
+public_network(){
 echo check if user "demo" exists
 keystone user-get demo > /dev/null 2>&1
 if [ $? -eq 0 ]
@@ -136,6 +130,7 @@ if ! [ $? -eq 0 ]
 then
 	echo create the public net
 	neutron net-create --tenant-id admin PublicLAN --router:external=True
+	#neutron net-create --tenant-id services PublicLAN --router:external=True
 fi
 }
 
@@ -145,7 +140,8 @@ neutron subnet-show public_subnet > /dev/null 2>&1
 if ! [ $? -eq 0 ]
 then
 	echo create the public subnet
-	neutron subnet-create --name PublicSubnet PublicLAN $vlan.0/24
+	#neutron subnet-create --name PublicSubnet PublicLAN $vlan.0/24
+	neutron subnet-create --tenant-id services --allocation-pool start=$start,end=$end --gateway=$gw --disable-dhcp --name PublicSubnet PublicLAN $vlan.0/24
 fi
 }
 
@@ -156,5 +152,6 @@ if ! [ $? -eq 0 ]
 then
 	echo create the public router
 	neutron router-create PublicRouter
+	neutron router-gateway-set PublicRouter PublicLAN
 fi
 }
