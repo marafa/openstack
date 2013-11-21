@@ -13,7 +13,7 @@ interfaces(){
 lines=`ifconfig | awk -F "[: ]+" '/inet addr:/ { if ($4 != "127.0.0.1") print $4 }' | cut -d. -f1,2,3| wc -l`
 if [ $lines -gt 1 ]
 then
-	echo " WARN: More than 1 interface found"
+	echo " WARN: More than 1 physical network interface found"
 	echo " Pls edit this `basename $0`"
 	exit 1
 else
@@ -112,54 +112,52 @@ device_primary
 device_bridge
 ovs
 #public_network
-notes(){
+tobe_the_new_public_network_proc(){
 
 echo check if user "demo" exists
 keystone user-get demo > /dev/null 2>&1
 if [ $? -eq 0 ]
 then
 	source ~/keystonerc_demo
-	echo check if the public network exists
-	neutron net-show public > /dev/null 2>&1
-	if ! [ $? -eq 0 ]
-	then
-		echo create the public net
-	fi
-	echo check if the public subnet exists
-	neutron subnet-show public_subnet > /dev/null 2>&1
-	if ! [ $? -eq 0 ]
-	then
-		echo create the public subnet
-	fi
 else
 	echo user demo doesnt exist
-	echo create a user for networking
-	source keystonerc_networking
-	        echo check if the public network exists
-        neutron net-show public > /dev/null 2>&1
-        if ! [ $? -eq 0 ]
-        then
-                echo create the public net
-        fi
-        echo check if the public subnet exists
-        neutron subnet-show public_subnet > /dev/null 2>&1
-        if ! [ $? -eq 0 ]
-        then
-                echo create the public subnet
-        fi
+	source /root/keystonerc_networking
 fi
 
+public_net
+public_subnet
+public_router
+}
 
-num=`neutron net-list | grep -i public | awk '{print $4}'|wc -l`
-if ! [ $num -eq 0 ]
+add_networking_user(){
+
+}
+
+public_net(){
+echo check if the public network exists
+neutron net-show public > /dev/null 2>&1
+if ! [ $? -eq 0 ]
 then
-	publiclan=`neutron subnet-list | grep -i public | awk '{print $4}'`
-	neutron subnet-show $publiclan
-	if [ "$publiclan" == "" ]
-	then
-		echo need to generate a public subnet
-	fi
-else
-	echo need to generate a public net
+	echo create the public net
+fi
+}
+
+public_subnet(){
+echo check if the public subnet exists
+neutron subnet-show public_subnet > /dev/null 2>&1
+if ! [ $? -eq 0 ]
+then
+	echo create the public subnet
+	neutron subnet-create --name PublicSubnet PublicLAN $vlan.0/24
+fi
+}
+
+public_router(){
+echo check if the router1 exists
+neutron router-show router1 > /dev/null 2>&1 #assuming our router isnt there
+if ! [ $? -eq 0 ]
+then
+	echo create the public router
+	neutron router-create PublicRouter
 fi
 }
