@@ -21,8 +21,8 @@ else
 fi
 }
 
-interfaces #disable this if it fails and enable the below line
-#vlan=192.168.122
+#interfaces #disable this if the script detects more than one interface  and enable the below line
+vlan=192.168.122
 
 now=`date +%Y%m%d%H%M`
 device=eth0
@@ -132,9 +132,6 @@ keystone user-get demo > /dev/null 2>&1
 if [ $? -eq 0 ]
 then
 	source /root/keystonerc_demo
-else
-	echo user demo doesnt exist
-	source /root/keystonerc_networking
 fi
 
 public_net
@@ -148,5 +145,4 @@ device_exist
 device_primary
 device_bridge
 ovs
-#public_network
-
+public_network
