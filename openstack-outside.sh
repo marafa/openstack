@@ -94,35 +94,6 @@ then
 fi
 }
 
-###MAIN
-check
-device_exist
-device_primary
-device_bridge
-ovs
-#public_network
-
-public_network(){
-echo check if user "demo" exists
-keystone user-get demo > /dev/null 2>&1
-if [ $? -eq 0 ]
-then
-	source /root/keystonerc_demo
-else
-	echo user demo doesnt exist
-	add_networking_user
-	source /root/keystonerc_networking
-fi
-
-public_net
-public_subnet
-public_router
-}
-
-add_networking_user(){
-echo add networking user
-}
-
 public_net(){
 echo check if the public network exists
 neutron net-show public > /dev/null 2>&1
@@ -130,7 +101,6 @@ if ! [ $? -eq 0 ]
 then
 	echo create the public net
 	neutron net-create --tenant-id admin PublicLAN --router:external=True
-	#neutron net-create --tenant-id services PublicLAN --router:external=True
 fi
 }
 
@@ -141,7 +111,7 @@ if ! [ $? -eq 0 ]
 then
 	echo create the public subnet
 	#neutron subnet-create --name PublicSubnet PublicLAN $vlan.0/24
-	neutron subnet-create --tenant-id services --allocation-pool start=$start,end=$end --gateway=$gw --disable-dhcp --name PublicSubnet PublicLAN $vlan.0/24
+	neutron subnet-create --tenant-id admin --allocation-pool start=$start,end=$end --gateway=$gw --disable-dhcp --name PublicSubnet PublicLAN $vlan.0/24
 fi
 }
 
@@ -155,3 +125,28 @@ then
 	neutron router-gateway-set PublicRouter PublicLAN
 fi
 }
+
+public_network(){
+echo check if user "demo" exists
+keystone user-get demo > /dev/null 2>&1
+if [ $? -eq 0 ]
+then
+	source /root/keystonerc_demo
+else
+	echo user demo doesnt exist
+	source /root/keystonerc_networking
+fi
+
+public_net
+public_subnet
+public_router
+}
+
+###MAIN
+check
+device_exist
+device_primary
+device_bridge
+ovs
+#public_network
+
