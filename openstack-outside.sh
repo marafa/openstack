@@ -47,8 +47,8 @@ then
 fi
 if [ -f /etc/sysconfig/network-scripts/ifcfg-br-ex ]
 then
-	echo " ERROR: br-ex already configured! Rerunning?"
-	exit 1
+	echo " ERROR: br-ex already configured. Removing"
+	mv /etc/sysconfig/network-scripts/ifcfg-br-ex /root/ifcfg-br-ex-$now
 fi
 }
 
