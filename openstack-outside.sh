@@ -105,3 +105,17 @@ device_primary
 device_bridge
 ovs
 #public_network
+notes(){
+num=`neutron net-list | grep -i public | awk '{print $4}'|wc -l`
+if ! [ $num -eq 0 ]
+then
+	publiclan=`neutron subnet-list | grep -i public | awk '{print $4}'`
+	neutron subnet-show $publiclan
+	if [ "$publiclan" == "" ]
+	then
+		echo need to generate a public subnet
+	fi
+else
+	echo need to generate a public net
+fi
+}
