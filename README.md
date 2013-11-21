@@ -13,3 +13,5 @@ scripts for openstack admin tools
 - openstack-cheatsheet.txt - a cheat sheet
 
 - nested_kvm_cpu.sh - identifies and enables nested kvm support if available
+
+- openstack-notes.sh - rough notes
