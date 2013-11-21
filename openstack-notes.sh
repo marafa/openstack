@@ -3,6 +3,8 @@ yum install -y http://rdo.fedorapeople.org/openstack-havana/rdo-release-havana.r
 yum -y install openstack-packstack; packstack  --gen-answer-file=~/packstack.answer.orig ; cp ~/packstack.answer.orig ~/packstack.answer
 
 echo "alias vi=vim" >> ~/.bashrc; . ~/.bashrc
+echo "alias grep='grep -E --colour=auto'" >> ~/.bashrc; . ~/.bashrc
+echo "alias view='vim -R'" >> ~/.bashrc; . ~/.bashrc
 
 #### alias nic
 cp /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/ifcfg-eth0:1
