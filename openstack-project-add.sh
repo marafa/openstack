@@ -78,7 +78,7 @@ neutron subnet-create --name PrivateSubnet_$id PrivateNet_$id $CIDR/24
 neutron router-interface-add router$id PrivateSubnet_$id
 
 source /root/keystonerc_admin
-neutron router-gateway-set router$id PublicLAN 
+#neutron router-gateway-set router$id PublicLAN ##why? this is already done in openstack-outside.sh
 }
 
 keystonerc(){
