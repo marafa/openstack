@@ -48,7 +48,12 @@ then
 fi
 if [ -f /etc/sysconfig/network-scripts/ifcfg-br-ex ]
 then
-	echo " WARN: br-ex already configured. Removing"
+	echo " WARN: br-ex already configured. Backup & Continue?"
+	read answer
+	if ! [ "$answer" == "y" ]
+	then
+        	exit 4
+	fi
 	mv /etc/sysconfig/network-scripts/ifcfg-br-ex /root/ifcfg-br-ex-$now
 fi
 }
