@@ -127,12 +127,12 @@ fi
 }
 
 public_network(){
-echo check if user "demo" exists
-keystone user-get demo > /dev/null 2>&1
-if [ $? -eq 0 ]
-then
-	source /root/keystonerc_demo
-fi
+#echo check if user "demo" exists
+#keystone user-get demo > /dev/null 2>&1
+#if [ $? -eq 0 ]
+#then
+#	source /root/keystonerc_demo
+#fi
 
 public_net
 public_subnet
