@@ -22,7 +22,7 @@ fi
 }
 
 #interfaces #disable this if the script detects more than one interface  and enable the below line
-vlan=192.168.122
+vlan=192.168.0
 
 now=`date +%Y%m%d%H%M`
 device=eth0
@@ -55,6 +55,8 @@ then
         	exit 4
 	fi
 	mv /etc/sysconfig/network-scripts/ifcfg-br-ex /root/ifcfg-br-ex-$now
+	echo " WARN: /etc/sysconfig/network-scripts/ifcfg-br-ex found. Saving $device to /root/ifcfg-$device.$now"
+	mv /etc/sysconfig/network-scripts/ifcfg-$device /root/ifcfg-$device.$now
 fi
 }
 
@@ -89,14 +91,6 @@ EOF
 
 ovs(){ #open vswitch
 ovs-vsctl add-port br-ex $device; service network restart
-}
-
-check(){
-if [ -f /etc/sysconfig/network-scripts/ifcfg-br-ex ]
-then
-	echo " WARN: /etc/sysconfig/network-scripts/ifcfg-br-ex exist. Saving to /root/ifcfg-$device.$now"
-	mv /etc/sysconfig/network-scripts/ifcfg-$device /root/ifcfg-$device.$now
-fi
 }
 
 public_net(){
@@ -145,9 +139,8 @@ public_router
 }
 
 ###MAIN
-check
-device_exist
-device_primary
-device_bridge
-ovs
-public_network
+#check
+#device_primary
+#device_bridge
+#ovs
+#public_network
