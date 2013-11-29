@@ -3,7 +3,7 @@
 1.    yum install -y http://rdo.fedorapeople.org/rdo-release.rpm
 2.    yum -y update; reboot
 3.    yum install -y openstack-packstack
-4.    packstack --allinone --nagios-install=n -mysql-pw=password --ntp-servers=0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org --os-swift-install=y
+4.    packstack --allinone --nagios-install=n --mysql-pw=password --ntp-servers=0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org --os-swift-install=y
 
 vm 
 allinone also installs a demo user 
