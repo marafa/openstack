@@ -3,6 +3,12 @@
 1.    yum install -y http://rdo.fedorapeople.org/rdo-release.rpm
 2.    yum -y update; reboot
 3.    yum install -y openstack-packstack
+kvm=`virt-what`
+if [ "$kvm" == "kvm" ]
+then
+   sudo yum install -y mongodb-server mongodb
+   sudo sed -i '/--smallfiles/!s/OPTIONS=\"/OPTIONS=\"--smallfiles /' /etc/sysconfig/mongod
+fi
 4.    packstack --allinone --nagios-install=n --mysql-pw=password --ntp-servers=0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org --os-swift-install=y
 
 vm 
