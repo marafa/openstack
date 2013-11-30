@@ -62,3 +62,7 @@ sh /root/bin/openstack/openstack-outside.sh ### looks like we dont have to creat
 
 ###create a flavour for centos
 nova flavor-create --ephemeral 0 --rxtx-factor 1.0 --is-public True m2.small 6 1024 10 1
+
+#set demo password to password
+keystone user-password-update --pass password demo
+echo "export OS_PASSWORD=password" >> ~/keystonerc_demo

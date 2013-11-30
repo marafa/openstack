@@ -19,7 +19,8 @@ before setting up a vm set up a network, firewall rules, ssh keys
 
 i like to delete the networks made available with the allinone as they are not compatbile with my home network. so go to network topology tab on the left of the demo user''s project panel and delete the public and private networks as well as the router to start fresh.
 
-in the project tab on the left pane, select networks, press the create network button, enter the private network name (eg. demo_net) click on the subnet tab, enter demo_subnet fo rname and 10.20.30.0/24 . leave the gateway blank. create again, press the create network buton, enter the PUBLIC network name (eg. PublicNet) then public_subnet for the subnet name and YOUR network address eg. if the modem is 192.168.0.1 then put in 192.168.0.0/24. leave DHCP disabled. for the allocation pool pick a range that is sure to be free eg. 192.168.0.100, 192.168.0.200 .. dont leave out the comma. press create finally, create the router. call it router1
+in the project tab on the left pane, select networks, press the create network button, enter the private network name (eg. demo_net) click on the subnet tab, enter demo_subnet for name and 10.20.30.0/24 . leave the gateway blank. create again, press the create network buton, enter the PUBLIC network name (eg. PublicNet) then public_subnet for the subnet name and YOUR network address eg. if the modem is 192.168.0.1 then put in 192.168.0.0/24. leave DHCP disabled. for the allocation pool pick a range that is sure to be free eg. 192.168.0.100, 192.168.0.200 .. dont leave out the comma. press create 
+finally, create the router. call it router1 and set the gateway
 
 now. log out of demo user 
 log in as admin user 
