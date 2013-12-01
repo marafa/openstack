@@ -9,7 +9,7 @@ then
    yum install -y mongodb-server mongodb
    sed -i '/--smallfiles/!s/OPTIONS=\"/OPTIONS=\"--smallfiles /' /etc/sysconfig/mongod
 fi
-4.    packstack --allinone --nagios-install=n --mysql-pw=password --ntp-servers=0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org --os-swift-install=y --provision-demo-floatrange=192.168.0.0/24 --keystone-demo-passwd=password
+4.    packstack --allinone --nagios-install=n --mysql-pw=password --ntp-servers=0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org --os-swift-install=y --provision-demo-floatrange=192.168.0.128/25 --keystone-demo-passwd=password
 
 vm 
 allinone also installs a demo user 
