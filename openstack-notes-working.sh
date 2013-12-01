@@ -46,4 +46,4 @@ next , modify variables then run https://raw.github.com/marafa/openstack/master/
 you are now ready to instantiate your instance
 
 if you need to rerun the installation follwing this syntax
-packstack -answer-file=packstack-answers
+packstack --answer-file=packstack-answers
