@@ -2,12 +2,18 @@ yum install -y http://rdo.fedorapeople.org/openstack-havana/rdo-release-havana.r
 
 yum -y install openstack-packstack; packstack  --gen-answer-file=~/packstack.answer.orig ; cp ~/packstack.answer.orig ~/packstack.answer
 
-echo "alias vi=vim" >> ~/.bashrc
-echo "alias grep='grep -E --colour=auto'" >> ~/.bashrc
-echo "alias view='vim -R'" >> ~/.bashrc
-echo "export PATH=$PATH:/root/bin/openstack/" >> ~/.bashrc
-echo "alias df=df -h" >> ~/.bashrc
-. ~/.bashrc
+cat >> /root/.bashrc << EOF
+alias vi=vim
+alias grep='grep -E --colour=auto'
+alias view='vim -R'
+alias df=df -h
+export PATH=$PATH:/root/bin/openstack/
+if [ -f /root/keystonerc_admin ]
+then
+	source /root/keystonerc_admin
+fi
+EOF
+source /root/.bashrc
 
 #### git clone
 mkdir ~/bin
@@ -43,7 +49,6 @@ sed -i 's/CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS=/CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS
 
 
 echo "export PS1='[\u@\h \W(\033[1;31mkeystone_admin\033[0m)]\\$ '" >> ~/keystonerc_admin 
-echo "source ~/keystonerc_admin" >> ~/.bashrc
 source ~/keystonerc_admin
 
 kvm=`virt-what`
@@ -75,4 +80,3 @@ echo "export OS_PASSWORD=password" >> ~/keystonerc_demo
 
 ###in case a re run of the install is needed
 packstack --answer-file=packstack-answers
-
