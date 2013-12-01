@@ -125,22 +125,20 @@ then
 fi
 }
 
-public_network(){
-#echo check if user "demo" exists
-#keystone user-get demo > /dev/null 2>&1
-#if [ $? -eq 0 ]
-#then
-#	source /root/keystonerc_demo
-#fi
+public_floatingip(){
+neutron floatingip-create PublicLAN
+}
 
+public_network(){
 public_net
 public_subnet
 public_router
+public_floatingip
 }
 
 ###MAIN
 #check
 #device_primary
 #device_bridge
-#ovs
+ovs
 public_network
