@@ -63,11 +63,12 @@ chkconfig ntpdate on
 #ovs-vsctl add-port br-ex eth0; service network restart #this line is now in openstack-outside.sh
 
 sed -i 's/DEBUG = False/DEBUG = True/g' /etc/openstack-dashboard/local_settings
-sed -i 's/debug=True/debug=false/g' /etc/nova/nova.conf
 for service in `ls /etc/init.d/openstack-nova*`
 do
         $service restart
 done
+sed -i 's/debug=True/debug=false/g' /etc/nova/nova.conf
+service httpd restart
 
 sh /root/bin/openstack/openstack-outside.sh ### looks like we dont have to create a public network if demo account is used
 
