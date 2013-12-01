@@ -6,7 +6,7 @@ cat >> /root/.bashrc << EOF
 alias vi=vim
 alias grep='grep -E --colour=auto'
 alias view='vim -R'
-alias df=df -h
+alias df='df -h'
 export PATH=$PATH:/root/bin/openstack/
 if [ -f /root/keystonerc_admin ]
 then
@@ -73,6 +73,13 @@ sh /root/bin/openstack/openstack-outside.sh ### looks like we dont have to creat
 
 ###create a flavour for centos
 nova flavor-create --ephemeral 0 --rxtx-factor 1.0 --is-public True m2.small 6 1024 10 1
+
+### add rules to sec group default
+source /root/keystonerc_demo
+#ping
+nova --no-cache secgroup-add-rule default icmp -1 -1 0.0.0.0/0
+#ssh
+nova --no-cache secgroup-add-rule default tcp 22 22 0.0.0.0/0
 
 #set demo password to password
 keystone user-password-update --pass password demo
