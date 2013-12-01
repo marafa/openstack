@@ -6,11 +6,8 @@ echo "alias vi=vim" >> ~/.bashrc
 echo "alias grep='grep -E --colour=auto'" >> ~/.bashrc
 echo "alias view='vim -R'" >> ~/.bashrc
 echo "export PATH=$PATH:/root/bin/openstack/" >> ~/.bashrc
+echo "alias df=df -h" >> ~/.bashrc
 . ~/.bashrc
-
-#### alias nic
-cp /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/ifcfg-eth0:1
-sed -i 's/eth0"/eth0:1"/g' /etc/sysconfig/network-scripts/ifcfg-eth0:1
 
 #### git clone
 mkdir ~/bin
@@ -19,6 +16,10 @@ git clone https://github.com/marafa/openstack.git
 cd ~/bin/openstack
 ./openstack-os-tools.sh
 cd
+
+#### alias nic
+cp /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/ifcfg-eth0:1
+sed -i 's/eth0"/eth0:1"/g' /etc/sysconfig/network-scripts/ifcfg-eth0:1
 
 #####modify ~/packstack.answer
 sed -i 's/CONFIG_NTP_SERVERS=/CONFIG_NTP_SERVERS=0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org/g' ~/packstack.answer
@@ -37,6 +38,9 @@ sed -i 's/CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS=/CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS
 
 ###################RUN IT ##################
 #$#$     time packstack --answer-file=~/packstack.answer
+#OR
+#   packstack --allinone --nagios-install=n --mysql-pw=password --ntp-servers=0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org --os-swift-install=y --provision-demo-floatrange=192.168.0.128/25 --keystone-demo-passwd=password
+
 
 echo "export PS1='[\u@\h \W(\033[1;31mkeystone_admin\033[0m)]\\$ '" >> ~/keystonerc_admin 
 echo "source ~/keystonerc_admin" >> ~/.bashrc
@@ -68,3 +72,7 @@ nova flavor-create --ephemeral 0 --rxtx-factor 1.0 --is-public True m2.small 6 1
 #set demo password to password
 keystone user-password-update --pass password demo
 echo "export OS_PASSWORD=password" >> ~/keystonerc_demo
+
+###in case a re run of the install is needed
+packstack --answer-file=packstack-answers
+
