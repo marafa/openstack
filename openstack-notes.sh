@@ -40,6 +40,7 @@ sed -i 's/CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS=/CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS
 
 echo "export PS1='[\u@\h \W(\033[1;31mkeystone_admin\033[0m)]\\$ '" >> ~/keystonerc_admin 
 echo "source ~/keystonerc_admin" >> ~/.bashrc
+source ~/keystonerc_admin
 
 kvm=`virt-what`
 if [ "$kvm" == "kvm" ]
@@ -52,6 +53,7 @@ chkconfig ntpdate on
 
 #ovs-vsctl add-port br-ex eth0; service network restart #this line is now in openstack-outside.sh
 
+sed -i 's/DEBUG = False/DEBUG = True/g' /etc/openstack-dashboard/local_settings
 sed -i 's/debug=True/debug=false/g' /etc/nova/nova.conf
 for service in `ls /etc/init.d/openstack-nova*`
 do
