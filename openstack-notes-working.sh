@@ -32,8 +32,9 @@ now log out of admin user
 log in as demo user 
 in the project column, click on router and select router1. edit it. 
 click external gateway and choose PublicNet. 
-click set gateway click on router1. 
-click add interface. in the subnet menu, select demo_net 192.168.0.0/24 . save.
+click set gateway 
+click on router1. 
+click add interface. in the subnet menu, select demo_net 10.20.30.0/24 . save.
 
 check your network topology. all 3 should be connected.
 

@@ -75,12 +75,14 @@ sh /root/bin/openstack/openstack-outside.sh ### looks like we dont have to creat
 ###create a flavour for centos
 nova flavor-create --ephemeral 0 --rxtx-factor 1.0 --is-public True m2.small 6 1024 10 1
 
-### add rules to sec group default
+### add rules to sec group demo_secgroup
 source /root/keystonerc_demo
 #ping
-nova --no-cache secgroup-add-rule default icmp -1 -1 0.0.0.0/0
+nova --no-cache secgroup-add-rule demo_secgroup icmp -1 -1 0.0.0.0/0
 #ssh
-nova --no-cache secgroup-add-rule default tcp 22 22 0.0.0.0/0
+nova --no-cache secgroup-add-rule demo_secgroup tcp 22 22 0.0.0.0/0
+#list them
+nova secgroup-list-rules demo_secgroup
 
 #set demo password to password
 keystone user-password-update --pass password demo
