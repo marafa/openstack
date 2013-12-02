@@ -35,6 +35,8 @@ dns3=
 hwaddr=`cat /etc/udev/rules.d/70-persistent-net.rules | grep $device | cut -d, -f4 | sed 's/ ATTR{address}=="//g' | sed 's/"//g'`
 IP=`ifconfig $device|grep -w inet|awk '{print $2}'|cut -d: -f2`
 domain=marafa.vm
+PublicNet=PublicNet
+PublicSubNet=PublicSubNet
 
 ##determine one physical nic or more
 ##if one nic move ip from nic to br-ex in /etc/sysconfig/network-scripts
@@ -99,7 +101,7 @@ neutron net-show public > /dev/null 2>&1
 if ! [ $? -eq 0 ]
 then
 	echo create the public net
-	neutron net-create --tenant-id admin PublicLAN --router:external=True
+	neutron net-create --tenant-id admin $PublicNet --router:external=True
 fi
 }
 
@@ -109,8 +111,8 @@ neutron subnet-show public_subnet > /dev/null 2>&1
 if ! [ $? -eq 0 ]
 then
 	echo create the public subnet
-	#neutron subnet-create --name PublicSubnet PublicLAN $vlan.0/24
-	neutron subnet-create --tenant-id admin --allocation-pool start=$start,end=$end --gateway=$gw --disable-dhcp --name PublicSubnet PublicLAN $vlan.0/24
+	#neutron subnet-create --name $PublicSubNet $PublicNet $vlan.0/24
+	neutron subnet-create --tenant-id admin --allocation-pool start=$start,end=$end --gateway=$gw --disable-dhcp --name $PublicSubNet $PublicNet $vlan.0/24
 fi
 }
 
@@ -121,12 +123,12 @@ if ! [ $? -eq 0 ]
 then
 	echo create the public router
 	neutron router-create PublicRouter
-	neutron router-gateway-set PublicRouter PublicLAN
+	neutron router-gateway-set PublicRouter $PublicNet
 fi
 }
 
 public_floatingip(){
-neutron floatingip-create PublicLAN
+neutron floatingip-create $PublicNet
 }
 
 public_network(){
@@ -137,8 +139,8 @@ public_floatingip
 }
 
 ###MAIN
-#check
-#device_primary
-#device_bridge
+check
+device_primary
+device_bridge
 ovs
 public_network
