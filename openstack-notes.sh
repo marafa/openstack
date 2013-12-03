@@ -45,8 +45,7 @@ sed -i 's/CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS=/CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS
 ###################RUN IT ##################
 #$#$     time packstack --answer-file=~/packstack.answer
 #OR
-#   packstack --allinone --nagios-install=n --mysql-pw=password --ntp-servers=0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org --os-swift-install=y --provision-demo-floatrange=192.168.0.128/25 --keystone-demo-passwd=password
-
+#   packstack --allinone --nagios-install=n --mysql-pw=password --ntp-servers=0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org --os-swift-install=y --provision-demo-floatrange=192.168.0.0/24 --keystone-demo-passwd=password
 
 echo "export PS1='[\u@\h \W(\033[1;31mkeystone_admin\033[0m)]\\$ '" >> ~/keystonerc_admin 
 source ~/keystonerc_admin
