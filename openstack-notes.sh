@@ -1,4 +1,4 @@
-yum install -y http://rdo.fedorapeople.org/openstack-havana/rdo-release-havana.rpm virt-what wget git screen vim yum-presto iotop vim-enhanced; yum -y update; reboot
+yum install -y http://rdo.fedorapeople.org/openstack-havana/rdo-release-havana.rpm virt-what wget git screen vim yum-presto iotop vim-enhanced; yum -y update; 
 
 yum -y install openstack-packstack; packstack  --gen-answer-file=~/packstack.answer.orig ; cp ~/packstack.answer.orig ~/packstack.answer
 
