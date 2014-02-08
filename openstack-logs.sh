@@ -13,7 +13,7 @@ fi
 if [ $# -eq 0 ]
 then
 	echo " Usage: `basename $0` component"
-	echo "	Where component is one of nova, keystone, neutron, openvswitch, horizon, ceilometer, cinder, glance, foreman, puppet, system"
+	echo "	Where component is one of nova, keystone, neutron, openvswitch, horizon, ceilometer, cinder, glance, foreman, puppet, system, httpd"
 	exit 2
 fi
 
@@ -50,5 +50,8 @@ case $1 in
 	;;
 	system)
 		multitail /var/log/{messages,secure}
+	;;
+	httpd)
+		multitail /var/log/httpd/{access,error}_log
 	;;
 esac
