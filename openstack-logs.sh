@@ -1,20 +1,22 @@
 #!/bin/sh
 
-version=0.2
+version=0.3
+
+help(){
+	echo " Usage: `basename $0` component"
+	echo "	Where component is one of nova, keystone, neutron, openvswitch, horizon, ceilometer, cinder, glance, foreman, puppet, system, httpd"
+}
 
 if ! [ -f /usr/bin/multitail ]
 then
 	echo  ERROR: multitail not found!
 	yum install multitail
 else
-	echo `basename $0` $version
-fi
-
-if [ $# -eq 0 ]
-then
-	echo " Usage: `basename $0` component"
-	echo "	Where component is one of nova, keystone, neutron, openvswitch, horizon, ceilometer, cinder, glance, foreman, puppet, system, httpd"
-	exit 2
+	if [ $# -eq 0 ]
+	then
+		help
+		exit 2
+	fi
 fi
 
 case $1 in
@@ -53,5 +55,8 @@ case $1 in
 	;;
 	httpd)
 		multitail /var/log/httpd/{access,error}_log
+	;;
+	*)
+		help
 	;;
 esac
