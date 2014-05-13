@@ -68,6 +68,7 @@ md5sum -c $md5file  > file.tmp
 grep $image file.tmp | grep OK > /dev/null
 if [ $? -eq 0 ]
 then
+	echo " INFO: Importing $image into glance"
         . /root/keystonerc_admin
         glance image-create --name "$name" --disk-format qcow2 --container-format bare --is-public true < $dir/$image
 else
