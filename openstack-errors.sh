@@ -18,4 +18,10 @@ case $1 in
 	;;
 esac
 
+follow(){
+multitail -E "$param" --mergeall /var/log/{nova,keystone,neutron,openvswitch,horizon,ceilometer,cinder,glance}/*
+}
+
+collect(){
 grep -Eri --colour=auto $param /var/log/{nova,keystone,neutron,openvswitch,horizon,ceilometer,cinder,glance}
+}
