@@ -78,7 +78,7 @@ images(){
 get_md5sum
 download
 echo " INFO: Checking md5sum of $image"
-md5sum -c $md5file  > file.tmp
+md5sum -c $md5file  > file.tmp 2>/dev/null
 grep $image file.tmp | grep OK > /dev/null
 if [ $? -eq 0 ]
 then
