@@ -27,6 +27,13 @@ fedora19(){
         images
 }
 
+fedora20(){
+	location=http://download.fedoraproject.org/pub/fedora/linux/updates/20/Images/x86_64/Fedora-x86_64-20-20140407-sda.qcow2
+	image=Fedora-x86_64-20-20140407-sda.qcow2
+	name="Fedora 20 x86_64"
+	images
+}
+
 centos(){
         location=http://mirror.catn.com/pub/catn/images/qcow2/centos6.4-x86_64-gold-master.img
         image=centos6.4-x86_64-gold-master.img
@@ -94,6 +101,7 @@ rm -rf file.tmp
 all(){
         cirros
         fedora19
+	fedora20
         centos
         centos65
 	rhel7
@@ -122,6 +130,9 @@ case $1 in
         ;;
         fedora19)
                 fedora19
+        ;;
+        fedora20)
+                fedora20
         ;;
         all)
                 all
