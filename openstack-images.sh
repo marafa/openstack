@@ -17,6 +17,7 @@ cirros(){
         image=cirros-0.3.0-x86_64-disk.img
         location=https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img
         name="CirrOS 0.3.0"
+        md5="50bdc35edb03a38d91b1b071afb20a3c"
         images
 }
 
@@ -24,6 +25,7 @@ fedora19(){
         location=http://download.fedoraproject.org/pub/fedora/linux/releases/19/Images/x86_64/Fedora-x86_64-19-20130627-sda.qcow2
         image=Fedora-x86_64-19-20130627-sda.qcow2
         name="Fedora 19 x86_64"
+        md5="9ff360edd3b3f1fc035205f63a58ec3e"
         images
 }
 
@@ -31,6 +33,7 @@ fedora20(){
 	location=http://download.fedoraproject.org/pub/fedora/linux/updates/20/Images/x86_64/Fedora-x86_64-20-20140407-sda.qcow2
 	image=Fedora-x86_64-20-20140407-sda.qcow2
 	name="Fedora 20 x86_64"
+	md5="1ec332a350e0a839f03c967c1c568623"
 	images
 }
 
@@ -38,6 +41,7 @@ centos(){
         location=http://mirror.catn.com/pub/catn/images/qcow2/centos6.4-x86_64-gold-master.img
         image=centos6.4-x86_64-gold-master.img
         name="CentOS 6.4 x86_64"
+        md5="6cbd6c52a836e7dec8716b8ef5a37c4a"
         images
 }
 
@@ -45,6 +49,7 @@ centos65(){
 	location=http://repos.fedorapeople.org/repos/openstack/guest-images/centos-6.5-20140117.0.x86_64.qcow2
 	image=centos-6.5-20140117.0.x86_64.qcow2
 	name="CentOS 6.5 x86_64"
+	md5="90e4569064f2a3d72b1291a0d91df406"
 	images
 }
 
