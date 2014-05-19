@@ -90,6 +90,8 @@ images(){
 get_md5sum
 download
 echo " INFO: Checking md5sum of $image"
+md5file=/tmp/$image.md5
+echo "$md5 $image" > $md5file
 md5sum -c $md5file  > file.tmp 2>/dev/null
 grep $image file.tmp | grep OK > /dev/null
 if [ $? -eq 0 ]
@@ -100,7 +102,7 @@ then
 else
         echo " ERROR: Image md5um indicates $image is corrupt"
 fi
-rm -rf file.tmp
+rm -rf file.tmp $md5file
 }
 
 all(){
