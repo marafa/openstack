@@ -1,13 +1,11 @@
 #!/bin/sh
 #downloads images, checks md5sum, adds the image to glance
 
-echo "Todo: integrate http://dev.centos.org/centos/hvm/"
-
 dir=/root/images.tmp
 md5file="`dirname $0`/glance-images.md5sum"
 
 usage(){
-        echo " Usage: `basename $0` all centos cirros fedora19 centos65 rhel7"
+        echo " Usage: `basename $0` all cirros fedora19 fedora20 centos centos65 rhel7"
         echo
         echo " Submit image locations at https://github.com/marafa/openstack"
         exit 1
@@ -57,6 +55,7 @@ rhel7(){
 	location=ftp://ftp.redhat.com/redhat/rhel/rc/7/GuestImage/rhel-guest-image-7.0-20140410.0.x86_64.qcow2
 	image=rhel-guest-image-7.0-20140410.0.x86_64.qcow2
 	name="RHEL 7.0 x86_64"
+	md5=""
 	images
 }
 
@@ -90,10 +89,12 @@ images(){
 get_md5sum
 download
 echo " INFO: Checking md5sum of $image"
-md5file=/tmp/$image.md5
-echo "$md5 $image" > $md5file
-md5sum -c $md5file  > file.tmp 2>/dev/null
-grep $image file.tmp | grep OK > /dev/null
+#md5file=/tmp/$image.md5
+#echo "$md5 $image" > $md5file
+#md5sum -c $md5file  > file.tmp 2>/dev/null
+#grep $image file.tmp | grep OK > /dev/null
+md5sum $image > $image.md5sum
+grep $image.md5sum $md5sum > /dev/null
 if [ $? -eq 0 ]
 then
 	echo " INFO: Importing $image into glance"
