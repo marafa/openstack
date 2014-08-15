@@ -94,7 +94,7 @@ echo " INFO: Checking md5sum of $image"
 #md5sum -c $md5file  > file.tmp 2>/dev/null
 #grep $image file.tmp | grep OK > /dev/null
 md5sum $image > $image.md5sum
-grep $image.md5sum $md5sum > /dev/null
+grep $md5sum $image.md5sum  > /dev/null
 if [ $? -eq 0 ]
 then
 	echo " INFO: Importing $image into glance"
