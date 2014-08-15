@@ -1,8 +1,8 @@
 #!/bin/sh
 
-echo -n " WARN: `basename $0` will modify your network settings. Continue? y/n: "
+echo -n " WARN: `basename $0` will modify your network settings. Continue? YES/n: "
 read answer
-if ! [ "$answer" == "y" ]
+if ! [ "$answer" == "YES" ]
 then
         exit 1
 fi
