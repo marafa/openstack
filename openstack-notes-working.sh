@@ -1,8 +1,8 @@
 
 0.    do a minimal centos install
-1.    yum install -y http://rdo.fedorapeople.org/rdo-release.rpm
-2.    yum -y update; reboot
-3.    yum install -y openstack-packstack
+
+yum install -y http://rdo.fedorapeople.org/rdo-release.rpm; yum install -y openstack-packstack yum-presto; yum -y update; reboot
+
 kvm=`virt-what`
 if [ "$kvm" == "kvm" ]
 then
