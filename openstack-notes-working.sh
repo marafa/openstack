@@ -1,6 +1,8 @@
 
 0.    do a minimal centos install
 
+ssh-keygen -t rsa -N "" -f my.keyssh-keygen -t rsa -N "" -f my.key
+
 yum install -y http://rdo.fedorapeople.org/rdo-release.rpm; yum install -y openstack-packstack yum-presto; yum -y update; reboot
 
 kvm=`virt-what`
