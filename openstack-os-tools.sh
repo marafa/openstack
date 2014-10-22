@@ -22,7 +22,7 @@ then
 pkg="htop byobu alpine vnstat multitail"
 fi
 pkg=$pkg
-yum install $pkg iotop screen vim-enhanced yum-presto wget vim virt-what
+yum install $pkg iotop screen vim-enhanced yum-presto wget vim virt-what virt-top
 }
 
 install_tools
