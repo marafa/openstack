@@ -4,7 +4,7 @@ version=0.3
 
 help(){
 	echo " Usage: `basename $0` component"
-	echo "	Where component is one of nova, keystone, neutron, openvswitch, horizon, ceilometer, cinder, glance, foreman, puppet, system, httpd"
+	echo "	Where component is one of nova, keystone, neutron, openvswitch, horizon, ceilometer, cinder, glance, foreman, puppet, system, httpd, rabbitmq"
 }
 
 if ! [ -f /usr/bin/multitail ]
@@ -20,6 +20,9 @@ else
 fi
 
 case $1 in
+	rabbitmq)
+		multitail /var/log/rabbitmq/startup_{log, _err}
+	;;
 	nova)
 		multitail /var/log/nova/*log
 	;;
