@@ -12,10 +12,10 @@ usage(){
 }
 
 cirros(){
-        image=cirros-0.3.0-x86_64-disk.img
-        location=https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img
-        name="CirrOS 0.3.0"
-        md5="50bdc35edb03a38d91b1b071afb20a3c"
+        image=cirros-0.3.2-x86_64-disk.img
+	location=http://download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-disk.img
+        name="CirrOS 0.3.2"
+	md5-"64d7c1cd2b6f60c92c14662941cb7913"
         images
 }
 
@@ -44,10 +44,10 @@ centos(){
 }
 
 centos65(){
-	location=http://repos.fedorapeople.org/repos/openstack/guest-images/centos-6.5-20140117.0.x86_64.qcow2
-	image=centos-6.5-20140117.0.x86_64.qcow2
+	location=http://mirror.catn.com/pub/catn/images/qcow2/centos6.5-gold-master.qcow2
+	image=centos6.5-gold-master.qcow2
 	name="CentOS 6.5 x86_64"
-	md5="90e4569064f2a3d72b1291a0d91df406"
+	md5="2041756979e68a1cd40e5ffa3114cdd4"
 	images
 }
 
@@ -86,7 +86,7 @@ fi
 
 images(){
 #debug
-get_md5sum
+#get_md5sum
 download
 echo " INFO: Checking md5sum of $image"
 #md5file=/tmp/$image.md5
@@ -133,9 +133,6 @@ case $1 in
         cirros)
                 cirros
         ;;
-        centos)
-                centos
-        ;;
         fedora19)
                 fedora19
         ;;
@@ -144,6 +141,9 @@ case $1 in
         ;;
         all)
                 all
+        ;;
+        centos)
+                centos
         ;;
 	centos65)
 		centos65
