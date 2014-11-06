@@ -21,7 +21,7 @@ fi
 
 case $1 in
 	rabbitmq)
-		multitail /var/log/rabbitmq/startup_{log, _err}
+		multitail /var/log/rabbitmq/startup_{log,_err}
 	;;
 	nova)
 		multitail /var/log/nova/*log
