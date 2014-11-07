@@ -99,8 +99,8 @@ fi
 }
 
 primary #primary nic aka eth0
-br_ext
-ovs
+br_ext  #bridge for external connectivity
+ovs	#ovs configuration
 
 #debug
 
