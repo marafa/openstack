@@ -4,7 +4,7 @@
 neutron net-list |grep public > /dev/null
 if ! [ $? -eq 0 ]
 then
-        echo "Private net not found. Quitting"
+        echo "ERROR: Public net not found. Quitting"
         exit 1
 fi
 
@@ -14,6 +14,9 @@ subnet=`neutron router-port-list $router| grep ip_address|awk '{print $8}'| sed 
 
 neutron router-gateway-clear $router
 neutron router-interface-delete $router $public_id
-neutron router-interface-delete $router $subnet
+for i in $subnet
+do
+	neutron router-interface-delete $router $subnet
+done
 neutron router-delete $router
 neutron net-delete $public_id
