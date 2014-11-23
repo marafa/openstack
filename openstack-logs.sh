@@ -4,7 +4,7 @@ version=0.3
 
 help(){
 	echo " Usage: `basename $0` component"
-	echo "	Where component is one of nova, keystone, neutron, openvswitch, horizon, ceilometer, cinder, glance, foreman, puppet, system, httpd, rabbitmq"
+	echo "	Where component is one of nova, keystone, neutron, openvswitch, horizon, ceilometer, cinder, glance, foreman, puppet, system, http, https, rabbitmq, novnc"
 }
 
 if ! [ -f /usr/bin/multitail ]
@@ -56,8 +56,14 @@ case $1 in
 	system)
 		multitail /var/log/{messages,secure}
 	;;
-	httpd)
+	http)
 		multitail /var/log/httpd/{access,error}_log
+	;;
+	https)
+		multitail /var/log/httpd/horizon_ssl_{access,error}.log
+	;;
+	novnc)
+		multitail /var/log/nova/novncproxy.log
 	;;
 	*)
 		help
