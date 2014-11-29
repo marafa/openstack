@@ -20,6 +20,8 @@ neutron net-create --tenant-id demo public --router:external=True
 neutron subnet-create --tenant-id demo --allocation-pool start=$start,end=$end --gateway=$GATEWAY --disable-dhcp --name external public $network
 
 ##switch to demo user
+demo(){ 
+[ -z /root/keystonerc_demo ] && 
 source /root/keystonerc_demo
 private_subnet=`neutron subnet-list | grep -i private|awk '{print $2}'`
 neutron router-show router1 > /dev/null 2>&1 #assuming our router isnt there
@@ -36,7 +38,15 @@ neutron net-create private
 neutron subnet-create private 10.0.0.0/24 --name internal --dns_nameservers list=true 8.8.8.8 8.8.8.7 --gateway 10.0.0.1
 
 neutron router-interface-add router1 internal
+}
 
+if [ -z /root/keystonerc_demo ] 
+then
+	demo
+else
+	echo " ERROR: demo user not found!"
+	exit 3
+fi
 #end demo user
 
 source /root/keystonerc_admin
