@@ -19,7 +19,7 @@ fi
 install_tools(){
 if [ -f /etc/yum.repos.d/epel.repo ]
 then
-pkg="htop byobu alpine vnstat multitail"
+pkg="htop byobu alpine vnstat multitail bash-completion"
 fi
 pkg=$pkg
 yum install $pkg iotop screen vim-enhanced yum-presto wget vim virt-what virt-top
