@@ -74,7 +74,7 @@ fi
 
 CIDR=10.$CIDR2.$CIDR3.0
 
-neutron subnet-create --name PrivateSubnet_$id PrivateNet_$id $CIDR/24
+neutron subnet-create --dns-nameservers 8.8.8.8 8.8.8.7 --name PrivateSubnet_$id PrivateNet_$id $CIDR/24
 neutron router-interface-add router$id PrivateSubnet_$id
 
 source /root/keystonerc_admin
