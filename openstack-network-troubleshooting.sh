@@ -25,6 +25,10 @@ do
 	cat $device
 	echo 
 done
+
+echo "---IpTables---"
+iptables -nL
+
 echo "---Ifconfig---"
 ifconfig
 echo 
