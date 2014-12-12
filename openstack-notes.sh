@@ -1,4 +1,4 @@
-yum install -y http://rdo.fedorapeople.org/openstack-havana/rdo-release-havana.rpm virt-what wget git screen vim yum-presto iotop vim-enhanced; yum -y update; 
+yum -y install https://repos.fedorapeople.org/repos/openstack/openstack-icehouse/rdo-release-icehouse-4.noarch.rpm virt-what wget git screen vim yum-presto iotop vim-enhanced; yum -y update;
 
 yum -y install openstack-packstack; packstack  --gen-answer-file=~/packstack.answer.orig ; cp ~/packstack.answer.orig ~/packstack.answer
 
@@ -28,9 +28,11 @@ cp /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/ifcf
 sed -i 's/eth0"/eth0:1"/g' /etc/sysconfig/network-scripts/ifcfg-eth0:1
 
 #####modify ~/packstack.answer
+sed -i 's,CONFIG_SSH_KEY=,CONFIG_SSH_KEY=/root/.ssh/id_rsa.pub,g' ~/packstack.answer
 sed -i 's/CONFIG_NTP_SERVERS=/CONFIG_NTP_SERVERS=0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org/g' ~/packstack.answer
 sed -i 's/CONFIG_HORIZON_SSL=n/CONFIG_HORIZON_SSL=y/g' ~/packstack.answer 
 sed -i 's/PW=.*/PW=password/g' ~/packstack.answer 
+sed -i 's/PASSWORD=.*/PASSWORD=password/g' ~/packstack.answer 
 sed -i 's/CONFIG_SWIFT_INSTALL=n/CONFIG_SWIFT_INSTALL=y/g' ~/packstack.answer
 sed -i 's/CONFIG_CINDER_VOLUMES_SIZE=20G/CONFIG_CINDER_VOLUMES_SIZE=5G/g' ~/packstack.answer
 sed -i 's,CONFIG_NOVA_NETWORK_FLOATRANGE=10.3.4.0/22,CONFIG_NOVA_NETWORK_FLOATRANGE=192.168.0.0/24,g' ~/packstack.answer
