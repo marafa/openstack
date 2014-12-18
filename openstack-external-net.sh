@@ -21,7 +21,6 @@ neutron subnet-create --tenant-id demo --allocation-pool start=$start,end=$end -
 
 ##switch to demo user
 demo(){ 
-[ -z /root/keystonerc_demo ] && 
 source /root/keystonerc_demo
 private_subnet=`neutron subnet-list | grep -i private|awk '{print $2}'`
 neutron router-show router1 > /dev/null 2>&1 #assuming our router isnt there
@@ -40,7 +39,7 @@ neutron subnet-create private 10.0.0.0/24 --name internal --dns_nameservers list
 neutron router-interface-add router1 internal
 }
 
-if [ -z /root/keystonerc_demo ] 
+if ! [ -z /root/keystonerc_demo ] 
 then
 	demo
 else
