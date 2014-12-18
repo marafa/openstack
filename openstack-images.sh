@@ -15,7 +15,7 @@ cirros(){
         image=cirros-0.3.2-x86_64-disk.img
 	location=http://download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-disk.img
         name="CirrOS 0.3.2"
-	md5-"64d7c1cd2b6f60c92c14662941cb7913"
+	md5="64d7c1cd2b6f60c92c14662941cb7913"
         images
 }
 
