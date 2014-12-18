@@ -5,7 +5,7 @@ dir=/root/images.tmp
 md5file="`dirname $0`/glance-images.md5sum"
 
 usage(){
-        echo " Usage: `basename $0` all cirros fedora19 fedora20 fedora21 centos64 centos65 rhel7 centos6 centos7"
+        echo " Usage: `basename $0` all cirros fedora19 fedora20 fedora21 fedora21a centos64 centos65 rhel7 centos6 centos7"
         echo
         echo " Submit image locations at https://github.com/marafa/openstack"
         exit 1
@@ -39,7 +39,7 @@ fedora21(){
 	location=http://download.fedoraproject.org/pub/fedora/linux/releases/21/Cloud/Images/x86_64/Fedora-Cloud-Base-20141203-21.x86_64.qcow2
 	image=Fedora-Cloud-Base-20141203-21.x86_64.qcow2
 	name="Fedora 21 General Purpose"
-	md5=""
+	md5="d009530079fd6567a3f0579a09c03af0"
 	images
 }
 
@@ -47,7 +47,7 @@ fedora21a(){
 	location=http://download.fedoraproject.org/pub/fedora/linux/releases/21/Cloud/Images/x86_64/Fedora-Cloud-Atomic-20141203-21.x86_64.qcow2
 	image=Fedora-Cloud-Atomic-20141203-21.x86_64.qcow2
 	name="Fedora 21 Atomic"
-	md5=""
+	md5="7aa95d1513c957ac5028c3f7e6900e16"
 	images
 }
 
@@ -162,6 +162,9 @@ case $1 in
         ;;
         fedora21)
                 fedora21
+        ;;
+        fedora21a)
+                fedora21a
         ;;
         all)
                 all
