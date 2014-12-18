@@ -5,7 +5,7 @@ dir=/root/images.tmp
 md5file="`dirname $0`/glance-images.md5sum"
 
 usage(){
-        echo " Usage: `basename $0` all cirros fedora19 fedora20 centos centos65 rhel7"
+        echo " Usage: `basename $0` all cirros fedora19 fedora20 centos64 centos65 rhel7"
         echo
         echo " Submit image locations at https://github.com/marafa/openstack"
         exit 1
@@ -35,7 +35,7 @@ fedora20(){
 	images
 }
 
-centos(){
+centos64(){
         location=http://mirror.catn.com/pub/catn/images/qcow2/centos6.4-x86_64-gold-master.img
         image=centos6.4-x86_64-gold-master.img
         name="CentOS 6.4 x86_64"
@@ -110,7 +110,7 @@ all(){
         cirros
         fedora19
 	fedora20
-        centos
+        centos64
         centos65
 	rhel7
 }
@@ -142,8 +142,8 @@ case $1 in
         all)
                 all
         ;;
-        centos)
-                centos
+        centos64)
+                centos64
         ;;
 	centos65)
 		centos65
