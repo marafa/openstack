@@ -54,8 +54,8 @@ centos65(){
 centos6(){
 	location=http://cloud.centos.org/centos/6/images/CentOS-6-x86_64-GenericCloud-20141129_01.qcow2
 	image=CentOS-6-x86_64-GenericCloud-20141129_01.qcow2
-	name="CentOS 20141129"
-	md5=""
+	name="CentOS 6 20141129"
+	md5="62ac2565e3527377860361f57639f334"
 	images
 }
 
@@ -70,8 +70,8 @@ rhel7(){
 centos7(){
 	location=http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-20141129_01.qcow2
 	image=CentOS-7-x86_64-GenericCloud-20141129_01.qcow2
-	name="CentOS 7"
-	md5=""
+	name="CentOS 7 20141129"
+	md5="ffaf7aabd6330927cabd9ab996e070d2"
 	images
 }
 
