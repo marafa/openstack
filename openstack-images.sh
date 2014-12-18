@@ -5,7 +5,7 @@ dir=/root/images.tmp
 md5file="`dirname $0`/glance-images.md5sum"
 
 usage(){
-        echo " Usage: `basename $0` all cirros fedora19 fedora20 centos64 centos65 rhel7"
+        echo " Usage: `basename $0` all cirros fedora19 fedora20 centos64 centos65 rhel7 centos6 centos7"
         echo
         echo " Submit image locations at https://github.com/marafa/openstack"
         exit 1
@@ -51,10 +51,26 @@ centos65(){
 	images
 }
 
+centos6(){
+	location=http://cloud.centos.org/centos/6/images/CentOS-6-x86_64-GenericCloud-20141129_01.qcow2
+	image=CentOS-6-x86_64-GenericCloud-20141129_01.qcow2
+	name="CentOS 20141129"
+	md5=""
+	images
+}
+
 rhel7(){
 	location=ftp://ftp.redhat.com/redhat/rhel/rc/7/GuestImage/rhel-guest-image-7.0-20140410.0.x86_64.qcow2
 	image=rhel-guest-image-7.0-20140410.0.x86_64.qcow2
 	name="RHEL 7.0 x86_64"
+	md5=""
+	images
+}
+
+centos7(){
+	location=http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-20141129_01.qcow2
+	image=CentOS-7-x86_64-GenericCloud-20141129_01.qcow2
+	name="CentOS 7"
 	md5=""
 	images
 }
@@ -75,24 +91,10 @@ echo md5sum=$md5file
 echo debug ------
 }
 
-get_md5sum(){
-#if [ -f $dir/glance-images.md5sum ]
-if ! [ -f $md5file ]
-then
-	echo " INFO: Downloading md5sums to $md5file"
-        wget https://raw.github.com/marafa/openstack/master/glance-images.md5sum -O $md5file
-fi
-}
-
 images(){
 #debug
-#get_md5sum
 download
 echo " INFO: Checking md5sum of $image"
-#md5file=/tmp/$image.md5
-#echo "$md5 $image" > $md5file
-#md5sum -c $md5file  > file.tmp 2>/dev/null
-#grep $image file.tmp | grep OK > /dev/null
 md5sum $image > $image.md5sum
 grep $md5 $image.md5sum  > /dev/null
 if [ $? -eq 0 ]
@@ -112,6 +114,8 @@ all(){
 	fedora20
         centos64
         centos65
+	centos6
+	centos7
 	rhel7
 }
 
@@ -148,6 +152,15 @@ case $1 in
 	centos65)
 		centos65
 	;;
+	centos6)
+		centos6
+	;;
+	centos7)
+		centos7
+	;;	
+	rhel7)
+		rhel7
+	;;	
 	rhel7)
 		rhel7
 	;;	
