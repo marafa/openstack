@@ -1,5 +1,7 @@
 #!/bin/sh
-
+#requires 2 variables
+#1. user name
+#2. instance name
 echo -n "Q: Provide a user name with access to the instance: "
 read user
 
