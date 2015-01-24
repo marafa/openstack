@@ -16,10 +16,8 @@ EOF
 source /root/.bashrc
 
 #### git clone
-mkdir ~/bin
+git clone https://github.com/marafa/openstack.git bin
 cd ~/bin
-git clone https://github.com/marafa/openstack.git
-cd ~/bin/openstack
 ./openstack-os-tools.sh
 cd
 
