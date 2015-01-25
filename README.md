@@ -15,3 +15,5 @@ scripts for openstack admin tools
 - nested_kvm_cpu.sh - identifies and enables nested kvm support if available
 
 - openstack-notes.sh - rough notes
+
+You can also connect with me on LinkedIn @  http://www.linkedin.com/in/mohammedarafa/
