@@ -107,6 +107,7 @@ write_security_rules(){
 echo "todo: use neutron secgroup to add ssh and ping rules instead of nova"
 source $ks_dir/keystonerc_$user$id
 nova keypair-add key$id > $ks_dir/key$id.pem
+chmod 600 $ks_dir/key$id.pem
 nova secgroup-create SecGrp$id "Security Group $id"
 nova secgroup-add-rule SecGrp$id tcp 22 22 0.0.0.0/0
 neutron security-group-rule-create --direction ingress --protocol tcp --port_range_min 1 --port_range_max 65535 SecGrp$id 
