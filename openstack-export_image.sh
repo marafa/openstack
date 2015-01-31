@@ -5,9 +5,9 @@
 echo -n "Q: Provide a user name with access to the instance: "
 read user
 
-if [ -f ~/keystonerc_$user ] 
+if [ -f ~/keystonerc/keystonerc_$user ] 
 then 
-	source ~/keystonerc_$user
+	source ~/keystonerc/keystonerc_$user
 else
 	echo "FAIL: ~/keystonerc_$user not found!"
 	exit 2
@@ -23,6 +23,7 @@ then
 	exit 1
 fi
 
+echo " INFO: Stopping instance $instance_id"
 nova stop $instance_id
 
 nova list #verify instance is in SHUTOFF state
