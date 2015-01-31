@@ -28,10 +28,12 @@ nova stop $instance_id
 
 nova list #verify instance is in SHUTOFF state
 
+echo " INFO: Snapshoting instance $instance_id"
 nova image-create --poll $instance $instance.snapshot
 if [ $? -eq 0 ]
 then
   snapshot_id=`nova image-list |grep $instance.snapshot |awk '{print $2}'`
+  echo " INFO: Exporting $instance" 
   glance image-download --file $instance.raw $snapshot_id
 else
   echo "FAIL: something went wrong!"
