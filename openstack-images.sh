@@ -95,7 +95,7 @@ centos7atomic(){
 	location=http://buildlogs.centos.org/rolling/7/isos/x86_64/CentOS-7-x86_64-AtomicHost.qcow2
 	image=CentOS-7-x86_64-AtomicHost.qcow2
 	name="CentOS 7 AtomicHost"
-	md5=""
+	md5="ad53d8a7800f2ef5c09feeb413d50d43"
 	images
 }
 
