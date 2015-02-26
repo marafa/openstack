@@ -22,5 +22,6 @@ Miscellaneous
 - openstack-notes.sh - rough notes to get stuff working
 - openstack-images.sh - downloads images, checks md5sum, adds the image to glance
 - openstack-logs.sh - views component logs
+- openstack-hammer-uninstall.sh - lifted from RDO - you do NOT want to run this
 
 You can also connect with me on LinkedIn @  http://www.linkedin.com/in/mohammedarafa/
