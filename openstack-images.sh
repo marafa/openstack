@@ -5,7 +5,7 @@ dir=/root/images.tmp
 md5file="`dirname $0`/glance-images.md5sum"
 
 usage(){
-        echo " Usage: `basename $0` all cirros fedora19 fedora20 fedora21 fedora21a centos64 centos65 rhel7 centos6 centos7"
+        echo " Usage: `basename $0` all cirros fedora19 fedora20 fedora21 fedora21a centos64 centos65 rhel7 centos6 centos7 centos7atomic"
         echo
         echo " Submit image locations at https://github.com/marafa/openstack"
         exit 1
@@ -91,6 +91,14 @@ centos7(){
 	images
 }
 
+centos7atomic(){
+	location=http://buildlogs.centos.org/rolling/7/isos/x86_64/CentOS-7-x86_64-AtomicHost.qcow2
+	image=CentOS-7-x86_64-AtomicHost.qcow2
+	name="CentOS 7 AtomicHost"
+	md5=""
+	images
+}
+
 download(){
 if ! [ -a $dir/$image ]
 then
@@ -134,6 +142,7 @@ all(){
 	centos6
 	centos7
 	rhel7
+	centos7atomic
 }
 
 ####main
@@ -187,6 +196,9 @@ case $1 in
 	rhel7)
 		rhel7
 	;;	
+	centos7atomic)
+		centos7atomic
+	;;
         *)
                 usage
         ;;
