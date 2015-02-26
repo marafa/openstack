@@ -3,7 +3,7 @@ openstack
 
 Scripts for openstack admin tools
 
-Netowrk
+Network
 - openstack-outside.sh - setup br-ex to communicate with the outside world - deprecated
 - openstack-network-troubleshooting.sh - script to collect information to aid network troubleshooting
 - openstack-network.sh - wrapper script for the next 3 scripts
