@@ -40,3 +40,6 @@ else
 		fi
 	fi
 fi
+
+#todo
+#utilise cat /sys/module/kvm_intel/parameters/ept
